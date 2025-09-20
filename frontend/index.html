@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookTracker Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2128;
+            --bg-hover: #262c36;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-yellow: #d29922;
+            --accent-red: #f85149;
+            --border-color: #30363d;
+            --progress-bg: #21262d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(22, 27, 34, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-brand::before {
+            content: "📚";
+            font-size: 1.75rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #4493e4;
+            border-color: #4493e4;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Section Headers */
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-count {
+            background: var(--bg-secondary);
+            padding: 0.125rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Book Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Book Card */
+        .book-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-blue);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .book-card:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .book-header {
+            margin-bottom: 1rem;
+        }
+
+        .book-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-author {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .book-metadata {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-reading {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        .status-want-to-read {
+            background: rgba(210, 153, 34, 0.1);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(210, 153, 34, 0.2);
+        }
+
+        .status-completed {
+            background: rgba(63, 185, 80, 0.1);
+            color: var(--accent-green);
+            border: 1px solid rgba(63, 185, 80, 0.2);
+        }
+
+        .book-pages {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        .progress-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar {
+            background: var(--progress-bg);
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--accent-blue), #4493e4);
+        }
+
+        .progress-fill.completed {
+            background: linear-gradient(90deg, var(--accent-green), #2ea043);
+        }
+
+        .progress-fill.want-to-read {
+            background: linear-gradient(90deg, var(--accent-yellow), #b87a00);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error State */
+        .error-message {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid rgba(248, 81, 73, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .error-icon {
+            font-size: 1.25rem;
+        }
+
+        /* Add Book Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+
+        .fab:hover {
+            background: #4493e4;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .fab {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-brand">BookTracker</a>
+            <div class="nav-links">
+                <button id="refreshBtn" class="btn" title="Refresh Data">
+                    🔄 Refresh
+                </button>
+                <a href="http://localhost:8000/docs" target="_blank" class="btn btn-primary">
+                    🚀 API Playground
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Stats Section -->
+        <div class="stats-container" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-value" id="totalBooks">0</div>
+                <div class="stat-label">Total Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="currentlyReading">0</div>
+                <div class="stat-label">Currently Reading</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completedBooks">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="wantToRead">0</div>
+                <div class="stat-label">Want to Read</div>
+            </div>
+        </div>
+
+        <!-- Currently Reading Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">📖 Currently Reading</span>
+                <span class="section-count" id="readingCount">0</span>
+            </div>
+            <div id="readingBooks" class="books-grid">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Want to Read Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">📚 Want to Read</span>
+                <span class="section-count" id="wantToReadCount">0</span>
+            </div>
+            <div id="wantToReadBooks" class="books-grid">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+
+        <!-- Completed Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-title">✅ Completed</span>
+                <span class="section-count" id="completedCount">0</span>
+            </div>
+            <div id="completedBooks" class="books-grid">
+                <div class="loading"><div class="spinner"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="addBookBtn" title="Add New Book">
+        +
+    </button>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000/api/v1';
+
+        // State Management
+        let books = [];
+        let isLoading = false;
+
+        // DOM Elements
+        const elements = {
+            readingBooks: document.getElementById('readingBooks'),
+            wantToReadBooks: document.getElementById('wantToReadBooks'),
+            completedBooks: document.getElementById('completedBooks'),
+            readingCount: document.getElementById('readingCount'),
+            wantToReadCount: document.getElementById('wantToReadCount'),
+            completedCount: document.getElementById('completedCount'),
+            totalBooks: document.getElementById('totalBooks'),
+            currentlyReading: document.getElementById('currentlyReading'),
+            completedBooksCount: document.getElementById('completedBooks'),
+            wantToReadStat: document.getElementById('wantToRead'),
+            refreshBtn: document.getElementById('refreshBtn'),
+            addBookBtn: document.getElementById('addBookBtn')
+        };
+
+        // Utility Functions
+        function formatStatus(status) {
+            return status.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function calculateProgress(currentPage, totalPages) {
+            if (!totalPages || totalPages === 0) return 0;
+            return Math.min(Math.round((currentPage / totalPages) * 100), 100);
+        }
+
+        function getStatusClass(status) {
+            const statusMap = {
+                'reading': 'status-reading',
+                'want_to_read': 'status-want-to-read',
+                'completed': 'status-completed'
+            };
+            return statusMap[status] || '';
+        }
+
+        function getProgressClass(status) {
+            const progressMap = {
+                'reading': '',
+                'want_to_read': 'want-to-read',
+                'completed': 'completed'
+            };
+            return progressMap[status] || '';
+        }
+
+        // Create Book Card HTML
+        function createBookCard(book) {
+            const progress = calculateProgress(book.current_page, book.total_pages);
+            const statusClass = getStatusClass(book.status);
+            const progressClass = getProgressClass(book.status);
+
+            return `
+                <div class="book-card fade-in" data-book-id="${book.id}">
+                    <div class="book-header">
+                        <h3 class="book-title" title="${book.title}">${book.title}</h3>
+                        <p class="book-author">by ${book.author}</p>
+                    </div>
+                    <div class="book-metadata">
+                        <span class="status-badge ${statusClass}">
+                            ${formatStatus(book.status)}
+                        </span>
+                        <span class="book-pages">
+                            ${book.current_page} / ${book.total_pages} pages
+                        </span>
+                    </div>
+                    ${book.rating ? `
+                        <div style="margin-bottom: 0.75rem; color: var(--accent-yellow);">
+                            ${'⭐'.repeat(book.rating)}
+                        </div>
+                    ` : ''}
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Progress</span>
+                            <span>${progress}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${progressClass}" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Create Empty State HTML
+        function createEmptyState(message, icon = '📚') {
+            return `
+                <div class="empty-state">
+                    <div class="empty-state-icon">${icon}</div>
+                    <p class="empty-state-text">${message}</p>
+                </div>
+            `;
+        }
+
+        // Create Error Message HTML
+        function createErrorMessage(message) {
+            return `
+                <div class="error-message">
+                    <span class="error-icon">⚠️</span>
+                    <span>${message}</span>
+                </div>
+            `;
+        }
+
+        // Group Books by Status
+        function groupBooksByStatus(books) {
+            const groups = {
+                reading: [],
+                want_to_read: [],
+                completed: []
+            };
+
+            books.forEach(book => {
+                if (groups[book.status]) {
+                    groups[book.status].push(book);
+                }
+            });
+
+            return groups;
+        }
+
+        // Update Stats
+        function updateStats(groups) {
+            const total = books.length;
+            const reading = groups.reading.length;
+            const wantToRead = groups.want_to_read.length;
+            const completed = groups.completed.length;
+
+            // Update stat cards
+            elements.totalBooks.textContent = total;
+            elements.currentlyReading.textContent = reading;
+            elements.completedBooksCount.textContent = completed;
+            elements.wantToReadStat.textContent = wantToRead;
+
+            // Update section counts
+            elements.readingCount.textContent = reading;
+            elements.wantToReadCount.textContent = wantToRead;
+            elements.completedCount.textContent = completed;
+        }
+
+        // Render Books
+        function renderBooks() {
+            const groups = groupBooksByStatus(books);
+            updateStats(groups);
+
+            // Render Currently Reading
+            if (groups.reading.length > 0) {
+                elements.readingBooks.innerHTML = groups.reading
+                    .map(book => createBookCard(book))
+                    .join('');
+            } else {
+                elements.readingBooks.innerHTML = createEmptyState('No books currently being read', '📖');
+            }
+
+            // Render Want to Read
+            if (groups.want_to_read.length > 0) {
+                elements.wantToReadBooks.innerHTML = groups.want_to_read
+                    .map(book => createBookCard(book))
+                    .join('');
+            } else {
+                elements.wantToReadBooks.innerHTML = createEmptyState('Your reading list is empty', '📚');
+            }
+
+            // Render Completed
+            if (groups.completed.length > 0) {
+                elements.completedBooks.innerHTML = groups.completed
+                    .map(book => createBookCard(book))
+                    .join('');
+            } else {
+                elements.completedBooks.innerHTML = createEmptyState('No completed books yet', '✅');
+            }
+        }
+
+        // Fetch Books from API
+        async function fetchBooks() {
+            if (isLoading) return;
+
+            isLoading = true;
+            elements.refreshBtn.disabled = true;
+            elements.refreshBtn.innerHTML = '⏳ Loading...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/books/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                books = await response.json();
+                renderBooks();
+
+            } catch (error) {
+                console.error('Error fetching books:', error);
+
+                // Show error in all sections
+                const errorHtml = createErrorMessage(
+                    `Failed to load books. Please ensure the API is running on port 8000. ${error.message}`
+                );
+
+                elements.readingBooks.innerHTML = errorHtml;
+                elements.wantToReadBooks.innerHTML = errorHtml;
+                elements.completedBooks.innerHTML = errorHtml;
+
+                // Reset stats
+                elements.totalBooks.textContent = '0';
+                elements.currentlyReading.textContent = '0';
+                elements.completedBooksCount.textContent = '0';
+                elements.wantToReadStat.textContent = '0';
+            } finally {
+                isLoading = false;
+                elements.refreshBtn.disabled = false;
+                elements.refreshBtn.innerHTML = '🔄 Refresh';
+            }
+        }
+
+        // Event Listeners
+        elements.refreshBtn.addEventListener('click', fetchBooks);
+
+        elements.addBookBtn.addEventListener('click', () => {
+            alert('Add Book feature coming soon! For now, please use the API Playground (Swagger UI) to add books.');
+        });
+
+        // Handle book card clicks
+        document.addEventListener('click', (e) => {
+            const bookCard = e.target.closest('.book-card');
+            if (bookCard) {
+                const bookId = bookCard.dataset.bookId;
+                console.log('Book clicked:', bookId);
+                // Future: Open book detail modal or navigate to book page
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchBooks();
+
+            // Auto-refresh every 30 seconds
+            setInterval(fetchBooks, 30000);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Press 'r' to refresh
+            if (e.key === 'r' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT') {
+                fetchBooks();
+            }
+            // Press 'a' to add book
+            if (e.key === 'a' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT') {
+                elements.addBookBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
