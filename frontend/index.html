@@ -12,361 +12,326 @@
         }
 
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-card: #1c2128;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-muted: #6e7681;
-            --accent-blue: #58a6ff;
-            --accent-green: #3fb950;
-            --accent-yellow: #d29922;
-            --accent-red: #f85149;
-            --border-color: #30363d;
-            --progress-bg: #21262d;
+            --forest-primary: #2D5016;
+            --forest-secondary: #3a6324;
+            --sage-green: #87A96B;
+            --mint-accent: #98FB98;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #242424;
+            --bg-card: #2a2a2a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b8b8b8;
+            --text-muted: #888888;
+            --border-color: #3a3a3a;
+            --danger: #dc3545;
+            --warning: #ffc107;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 13px;
+            line-height: 1.4;
         }
 
         /* Navigation Bar */
         nav {
             background: var(--bg-secondary);
-            border-bottom: 2px solid var(--accent-blue);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 1px solid var(--forest-primary);
+            height: 45px;
+            display: flex;
+            align-items: center;
         }
 
         .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
+            width: 100%;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--forest-primary);
             text-decoration: none;
-        }
-
-        .nav-brand::before {
-            content: "📚";
-            font-size: 2rem;
+            letter-spacing: 1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 1rem;
-            align-items: center;
+            gap: 10px;
         }
 
-        /* Static Buttons - No Effects */
+        /* Buttons */
         .btn {
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            border: 2px solid;
-            font-size: 0.95rem;
-            font-weight: 600;
+            padding: 6px 12px;
+            border: 1px solid;
+            font-size: 11px;
+            font-weight: 500;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            background: transparent;
+            transition: all 0.2s;
         }
 
         .btn-primary {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            color: #ffffff;
+            border-color: var(--forest-primary);
+            color: var(--forest-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--forest-primary);
+            color: white;
         }
 
         .btn-success {
-            background: var(--accent-green);
-            border-color: var(--accent-green);
-            color: #ffffff;
+            background: var(--forest-primary);
+            border-color: var(--forest-primary);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: var(--forest-secondary);
         }
 
         .btn-warning {
-            background: var(--accent-yellow);
-            border-color: var(--accent-yellow);
-            color: #000000;
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background: var(--warning);
+            color: black;
         }
 
         .btn-danger {
-            background: var(--accent-red);
-            border-color: var(--accent-red);
-            color: #ffffff;
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: white;
         }
 
         .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-        }
-
-        .btn-large {
-            padding: 0.875rem 1.5rem;
-            font-size: 1rem;
+            padding: 4px 8px;
+            font-size: 10px;
         }
 
         /* Main Container */
         .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
+            height: calc(100vh - 45px);
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            gap: 12px;
         }
 
         /* Stats Section */
         .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            display: flex;
+            gap: 10px;
+            height: 60px;
+            flex-shrink: 0;
         }
 
         .stat-card {
+            flex: 1;
             background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.75rem;
-            text-align: center;
-        }
-
-        .stat-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--accent-blue);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-blue);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--forest-primary);
+            line-height: 1;
         }
 
         .stat-label {
-            font-size: 1rem;
+            font-size: 10px;
             color: var(--text-secondary);
-            margin-top: 0.25rem;
-            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 2px;
         }
 
         .stat-sublabel {
-            font-size: 0.875rem;
+            font-size: 9px;
             color: var(--text-muted);
-            margin-top: 0.5rem;
+            margin-top: 1px;
+        }
+
+        /* Book Sections Container */
+        .books-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            min-height: 0;
         }
 
         /* Section Styling */
         .section {
-            margin-bottom: 3rem;
             background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
         .section-header {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .section-title-group {
-            display: flex;
             align-items: center;
-            gap: 1rem;
+            flex-shrink: 0;
         }
 
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 600;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .section-icon {
-            font-size: 1.75rem;
         }
 
         .section-count {
-            background: var(--accent-blue);
-            padding: 0.375rem 0.875rem;
-            border-radius: 20px;
-            font-size: 1rem;
-            color: #ffffff;
-            font-weight: 700;
+            background: var(--forest-primary);
+            padding: 2px 6px;
+            font-size: 10px;
+            color: white;
+            font-weight: 600;
         }
 
-        .section-description {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            font-style: italic;
+        /* Books Grid */
+        .books-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+            min-height: 0;
         }
 
-        /* Book Grid */
         .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         /* Book Card */
         .book-card {
             background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.75rem;
+            border: 1px solid var(--border-color);
+            padding: 10px;
             position: relative;
         }
 
         .book-card.completed {
             background: #1a2f1a;
-            border-color: var(--accent-green);
-        }
-
-        .completion-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .book-header {
-            margin-bottom: 1rem;
+            border-color: var(--forest-primary);
         }
 
         .book-title {
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 0.375rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            margin-bottom: 2px;
+            white-space: nowrap;
             overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .book-author {
-            font-size: 0.95rem;
+            font-size: 10px;
             color: var(--text-secondary);
-            font-style: italic;
+            margin-bottom: 6px;
         }
 
         .book-metadata {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
+            gap: 6px;
+            margin-bottom: 6px;
             flex-wrap: wrap;
         }
 
         .status-badge {
-            padding: 0.375rem 0.875rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            padding: 2px 6px;
+            font-size: 9px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: inline-block;
         }
 
         .status-reading {
-            background: rgba(88, 166, 255, 0.2);
-            color: var(--accent-blue);
-            border: 1px solid var(--accent-blue);
+            background: var(--forest-primary);
+            color: white;
         }
 
         .status-want-to-read {
-            background: rgba(210, 153, 34, 0.2);
-            color: var(--accent-yellow);
-            border: 1px solid var(--accent-yellow);
+            background: var(--sage-green);
+            color: white;
         }
 
         .status-completed {
-            background: rgba(63, 185, 80, 0.2);
-            color: var(--accent-green);
-            border: 1px solid var(--accent-green);
+            background: var(--forest-secondary);
+            color: white;
         }
 
         .book-pages {
-            font-size: 0.9rem;
+            font-size: 10px;
             color: var(--text-muted);
-            font-weight: 500;
         }
 
         /* Progress Bar */
         .progress-container {
-            margin: 1.25rem 0;
+            margin: 6px 0;
         }
 
         .progress-label {
-            font-size: 0.9rem;
+            font-size: 9px;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 2px;
             display: flex;
             justify-content: space-between;
-            font-weight: 600;
         }
 
         .progress-bar {
-            background: var(--progress-bg);
-            border-radius: 8px;
-            height: 12px;
-            overflow: hidden;
+            background: var(--bg-primary);
+            height: 4px;
             position: relative;
             cursor: pointer;
         }
 
         .progress-fill {
             height: 100%;
-            border-radius: 8px;
-            background: var(--accent-blue);
+            background: var(--forest-primary);
+            transition: width 0.3s;
         }
 
         .progress-fill.completed {
-            background: var(--accent-green);
+            background: var(--forest-secondary);
         }
 
         .progress-fill.want-to-read {
-            background: var(--accent-yellow);
+            background: var(--sage-green);
         }
 
         /* Book Actions */
         .book-actions {
-            margin-top: 1.25rem;
+            margin-top: 6px;
             display: flex;
-            gap: 0.75rem;
+            gap: 6px;
             align-items: center;
             justify-content: space-between;
         }
@@ -374,24 +339,22 @@
         .page-update {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 4px;
         }
 
         .page-input {
-            width: 80px;
-            padding: 0.5rem;
+            width: 50px;
+            padding: 3px 4px;
             background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 6px;
+            border: 1px solid var(--border-color);
             color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 10px;
             text-align: center;
         }
 
         .page-input:focus {
             outline: none;
-            border-color: var(--accent-blue);
+            border-color: var(--forest-primary);
         }
 
         /* Modal */
@@ -414,12 +377,11 @@
 
         .modal-content {
             background: var(--bg-card);
-            border: 2px solid var(--accent-blue);
-            border-radius: 16px;
-            padding: 2rem;
+            border: 1px solid var(--forest-primary);
+            padding: 20px;
             width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
+            max-width: 400px;
+            max-height: 80vh;
             overflow-y: auto;
         }
 
@@ -427,14 +389,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .modal-title {
-            font-size: 1.75rem;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
             color: var(--text-primary);
         }
 
@@ -442,199 +404,181 @@
             background: none;
             border: none;
             color: var(--text-secondary);
-            font-size: 1.75rem;
+            font-size: 20px;
             cursor: pointer;
-            padding: 0.25rem;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            line-height: 1;
         }
 
         /* Form */
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 12px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 11px;
+            font-weight: 500;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .form-input, .form-select, .form-textarea {
             width: 100%;
-            padding: 0.75rem;
+            padding: 6px 8px;
             background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
+            border: 1px solid var(--border-color);
             color: var(--text-primary);
-            font-size: 0.95rem;
+            font-size: 12px;
             font-family: inherit;
         }
 
         .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
-            border-color: var(--accent-blue);
+            border-color: var(--forest-primary);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 10px;
         }
 
         .form-actions {
             display: flex;
-            gap: 1rem;
+            gap: 10px;
             justify-content: flex-end;
-            margin-top: 1.5rem;
+            margin-top: 15px;
         }
 
         .duration-display {
-            padding: 1rem;
+            padding: 8px;
             background: var(--bg-secondary);
-            border-radius: 8px;
             text-align: center;
-            color: var(--accent-green);
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            border: 2px solid var(--accent-green);
+            color: var(--forest-primary);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            border: 1px solid var(--forest-primary);
         }
 
-        /* Toast Notifications - Static */
+        /* Toast Notifications */
         .toast-container {
             position: fixed;
-            top: 5rem;
-            right: 2rem;
+            top: 55px;
+            right: 20px;
             z-index: 2000;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 8px;
             pointer-events: none;
         }
 
         .toast {
             background: var(--bg-card);
-            border: 2px solid;
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            min-width: 320px;
-            max-width: 420px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            border: 1px solid;
+            padding: 8px 12px;
+            min-width: 200px;
+            max-width: 300px;
             pointer-events: auto;
+            font-size: 12px;
         }
 
         .toast.success {
-            border-color: var(--accent-green);
+            border-color: var(--forest-primary);
+            color: var(--forest-primary);
         }
 
         .toast.error {
-            border-color: var(--accent-red);
+            border-color: var(--danger);
+            color: var(--danger);
         }
 
         .toast.info {
-            border-color: var(--accent-blue);
-        }
-
-        .toast-icon {
-            font-size: 1.5rem;
-        }
-
-        .toast-message {
-            flex: 1;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-weight: 500;
+            border-color: var(--sage-green);
+            color: var(--sage-green);
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 3rem 2rem;
-            background: var(--bg-card);
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.6;
+            padding: 20px;
+            color: var(--text-muted);
         }
 
         .empty-state-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
         }
 
         .empty-state-text {
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
+            font-size: 11px;
         }
 
         /* Add Book Button */
         .fab {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: var(--accent-blue);
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--forest-primary);
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 2rem;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 50;
         }
 
+        .fab:hover {
+            background: var(--forest-secondary);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--forest-primary);
+        }
+
+        /* Rating Stars */
+        .rating-display {
+            display: flex;
+            gap: 2px;
+            margin: 4px 0;
+        }
+
+        .star {
+            width: 10px;
+            height: 10px;
+            background: var(--forest-primary);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-container {
-                padding: 0 1rem;
-            }
-
-            .nav-brand {
-                font-size: 1.25rem;
-            }
-
-            .container {
-                padding: 1.5rem 1rem;
-            }
-
-            .books-grid {
+        @media (max-width: 1200px) {
+            .books-container {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .fab {
-                bottom: 1rem;
-                right: 1rem;
-                width: 56px;
-                height: 56px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .toast-container {
-                right: 1rem;
-                left: 1rem;
+                grid-template-rows: repeat(3, 1fr);
             }
         }
     </style>
@@ -643,14 +587,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="#" class="nav-brand">BookTracker</a>
+            <a href="#" class="nav-brand">BOOKTRACKER</a>
             <div class="nav-links">
-                <button id="refreshBtn" class="btn btn-primary">
-                    🔄 Refresh
-                </button>
-                <a href="http://localhost:8000/docs" target="_blank" class="btn btn-warning">
-                    🚀 API Docs
-                </a>
+                <button id="refreshBtn" class="btn btn-primary">REFRESH</button>
+                <a href="http://localhost:8000/docs" target="_blank" class="btn btn-warning">API DOCS</a>
             </div>
         </div>
     </nav>
@@ -658,95 +598,80 @@
     <!-- Main Container -->
     <div class="container">
         <!-- Stats Section -->
-        <div class="stats-container" id="statsContainer">
+        <div class="stats-container">
             <div class="stat-card">
-                <div class="stat-icon">📚</div>
                 <div class="stat-value" id="totalBooks">0</div>
                 <div class="stat-label">Total Books</div>
                 <div class="stat-sublabel" id="totalPagesRead">0 pages read</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">📖</div>
                 <div class="stat-value" id="currentlyReading">0</div>
                 <div class="stat-label">Currently Reading</div>
-                <div class="stat-sublabel" id="readingProgress">0% average progress</div>
+                <div class="stat-sublabel" id="readingProgress">0% average</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">✅</div>
                 <div class="stat-value" id="completedBooksCount">0</div>
                 <div class="stat-label">Completed</div>
-                <div class="stat-sublabel">Great job!</div>
+                <div class="stat-sublabel">Books finished</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">📋</div>
                 <div class="stat-value" id="wantToRead">0</div>
                 <div class="stat-label">Want to Read</div>
-                <div class="stat-sublabel">In your queue</div>
+                <div class="stat-sublabel">In queue</div>
             </div>
         </div>
 
-        <!-- Currently Reading Section -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-title-group">
-                    <div class="section-title">
-                        <span class="section-icon">📖</span>
-                        <span>Currently Reading</span>
-                    </div>
+        <!-- Books Container -->
+        <div class="books-container">
+            <!-- Currently Reading Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">CURRENTLY READING</span>
                     <span class="section-count" id="readingCount">0</span>
                 </div>
-                <span class="section-description">Books you're actively reading</span>
-            </div>
-            <div id="readingBooksContainer" class="books-grid">
-                <!-- Books will be rendered here -->
-            </div>
-        </div>
-
-        <!-- Want to Read Section -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-title-group">
-                    <div class="section-title">
-                        <span class="section-icon">📚</span>
-                        <span>Want to Read</span>
+                <div class="books-scroll">
+                    <div id="readingBooksContainer" class="books-grid">
+                        <!-- Books will be rendered here -->
                     </div>
+                </div>
+            </div>
+
+            <!-- Want to Read Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">WANT TO READ</span>
                     <span class="section-count" id="wantToReadCount">0</span>
                 </div>
-                <span class="section-description">Your reading queue</span>
-            </div>
-            <div id="wantToReadBooksContainer" class="books-grid">
-                <!-- Books will be rendered here -->
-            </div>
-        </div>
-
-        <!-- Completed Section -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-title-group">
-                    <div class="section-title">
-                        <span class="section-icon">🏆</span>
-                        <span>Completed</span>
+                <div class="books-scroll">
+                    <div id="wantToReadBooksContainer" class="books-grid">
+                        <!-- Books will be rendered here -->
                     </div>
+                </div>
+            </div>
+
+            <!-- Completed Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">COMPLETED</span>
                     <span class="section-count" id="completedCount">0</span>
                 </div>
-                <span class="section-description">Books you've finished - congratulations!</span>
-            </div>
-            <div id="completedBooksContainer" class="books-grid">
-                <!-- Books will be rendered here -->
+                <div class="books-scroll">
+                    <div id="completedBooksContainer" class="books-grid">
+                        <!-- Books will be rendered here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Floating Action Button -->
-    <button class="fab" id="addBookBtn" title="Add New Book">
-        +
-    </button>
+    <button class="fab" id="addBookBtn" title="Add New Book">+</button>
 
     <!-- Add Book Modal -->
     <div id="addBookModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">📚 Add New Book</h2>
+                <h2 class="modal-title">Add New Book</h2>
                 <button class="close-btn" onclick="closeModal('addBookModal')">&times;</button>
             </div>
             <form id="addBookForm">
@@ -781,8 +706,8 @@
                     </select>
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="btn" onclick="closeModal('addBookModal')">Cancel</button>
-                    <button type="submit" class="btn btn-success btn-large">Add Book</button>
+                    <button type="button" class="btn btn-primary" onclick="closeModal('addBookModal')">CANCEL</button>
+                    <button type="submit" class="btn btn-success">ADD BOOK</button>
                 </div>
             </form>
         </div>
@@ -792,7 +717,7 @@
     <div id="logReadingModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">📖 Log Reading Session</h2>
+                <h2 class="modal-title">Log Reading Session</h2>
                 <button class="close-btn" onclick="closeModal('logReadingModal')">&times;</button>
             </div>
             <form id="logReadingForm">
@@ -807,7 +732,7 @@
                     </div>
                 </div>
                 <div class="duration-display" id="durationDisplay">
-                    ⏱️ Duration: 0 minutes
+                    Duration: 0 minutes
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="pagesRead">Pages Read</label>
@@ -818,8 +743,8 @@
                     <textarea id="sessionNotes" class="form-textarea" rows="3" placeholder="Any thoughts about this reading session?"></textarea>
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="btn" onclick="closeModal('logReadingModal')">Cancel</button>
-                    <button type="submit" class="btn btn-success btn-large">Save Session</button>
+                    <button type="button" class="btn btn-primary" onclick="closeModal('logReadingModal')">CANCEL</button>
+                    <button type="submit" class="btn btn-success">SAVE SESSION</button>
                 </div>
             </form>
         </div>
@@ -860,26 +785,13 @@
             toastContainer: document.getElementById('toastContainer')
         };
 
-        // Toast Notifications - No animation
+        // Toast Notifications
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-
-            const icons = {
-                success: '✅',
-                error: '❌',
-                info: 'ℹ️',
-                warning: '⚠️'
-            };
-
-            toast.innerHTML = `
-                <span class="toast-icon">${icons[type]}</span>
-                <span class="toast-message">${message}</span>
-            `;
-
+            toast.textContent = message;
             elements.toastContainer.appendChild(toast);
 
-            // Simple removal after 3 seconds
             setTimeout(() => {
                 toast.remove();
             }, 3000);
@@ -933,12 +845,12 @@
                 const remainingMinutes = minutes % 60;
 
                 if (hours > 0) {
-                    document.getElementById('durationDisplay').textContent = `⏱️ Duration: ${hours}h ${remainingMinutes}m`;
+                    document.getElementById('durationDisplay').textContent = `Duration: ${hours}h ${remainingMinutes}m`;
                 } else {
-                    document.getElementById('durationDisplay').textContent = `⏱️ Duration: ${minutes} minutes`;
+                    document.getElementById('durationDisplay').textContent = `Duration: ${minutes} minutes`;
                 }
             } else {
-                document.getElementById('durationDisplay').textContent = '⏱️ Duration: 0 minutes';
+                document.getElementById('durationDisplay').textContent = 'Duration: 0 minutes';
             }
         }
 
@@ -956,48 +868,45 @@
             let actionButton = '';
             if (book.status === 'reading') {
                 actionButton = `
-                    <button class="btn btn-primary btn-large" onclick="openLogReadingModal(${book.id})">
-                        📝 LOG READING
+                    <button class="btn btn-success btn-small" onclick="openLogReadingModal(${book.id})">
+                        LOG
                     </button>
                 `;
             } else if (book.status === 'want_to_read') {
                 actionButton = `
-                    <button class="btn btn-success btn-large" onclick="startBook(${book.id})">
-                        ▶️ START BOOK
+                    <button class="btn btn-success btn-small" onclick="startBook(${book.id})">
+                        START
                     </button>
                 `;
             } else if (book.status === 'completed') {
                 actionButton = `
-                    <button class="btn btn-warning btn-large" onclick="rereadBook(${book.id})">
-                        🔄 RE-READ
+                    <button class="btn btn-primary btn-small" onclick="rereadBook(${book.id})">
+                        REREAD
                     </button>
                 `;
             }
 
             return `
                 <div class="book-card ${book.status === 'completed' ? 'completed' : ''}" data-book-id="${book.id}">
-                    ${book.status === 'completed' ? '<div class="completion-badge">🏆</div>' : ''}
-                    <div class="book-header">
-                        <h3 class="book-title">${book.title}</h3>
-                        <p class="book-author">by ${book.author}</p>
-                    </div>
+                    <div class="book-title" title="${book.title}">${book.title}</div>
+                    <div class="book-author">by ${book.author}</div>
                     <div class="book-metadata">
                         <span class="status-badge ${statusClass}">
                             ${formatStatus(book.status)}
                         </span>
                         <span class="book-pages">
-                            📄 ${book.current_page} / ${book.total_pages} pages
+                            ${book.current_page}/${book.total_pages}
                         </span>
                     </div>
                     ${book.rating ? `
-                        <div style="margin: 0.75rem 0; font-size: 1.25rem;">
-                            ${'⭐'.repeat(book.rating)}
+                        <div class="rating-display">
+                            ${Array(book.rating).fill('<div class="star"></div>').join('')}
                         </div>
                     ` : ''}
                     <div class="progress-container">
                         <div class="progress-label">
                             <span>Progress</span>
-                            <span style="font-size: 1rem; color: var(--accent-blue);">${progress}%</span>
+                            <span>${progress}%</span>
                         </div>
                         <div class="progress-bar" onclick="handleProgressClick(event, ${book.id}, ${book.total_pages})">
                             <div class="progress-fill ${progressClass}" style="width: ${progress}%"></div>
@@ -1010,7 +919,7 @@
                                    value="${book.current_page}" min="0" max="${book.total_pages}"
                                    onchange="updatePages(${book.id}, this.value)">
                             <button class="btn btn-danger btn-small" onclick="deleteBook(${book.id})">
-                                🗑️
+                                DEL
                             </button>
                         </div>
                     </div>
@@ -1019,10 +928,9 @@
         }
 
         // Create Empty State
-        function createEmptyState(title, message, icon = '📚') {
+        function createEmptyState(title, message) {
             return `
                 <div class="empty-state">
-                    <div class="empty-state-icon">${icon}</div>
                     <div class="empty-state-title">${title}</div>
                     <p class="empty-state-text">${message}</p>
                 </div>
@@ -1058,7 +966,7 @@
             elements.completedBooksCount.textContent = groups.completed.length;
             elements.wantToReadStat.textContent = groups.want_to_read.length;
             elements.totalPagesRead.textContent = `${totalPages} pages read`;
-            elements.readingProgress.textContent = `${avgProgress}% average progress`;
+            elements.readingProgress.textContent = `${avgProgress}% average`;
 
             // Update counts
             elements.readingCount.textContent = groups.reading.length;
@@ -1073,8 +981,7 @@
             } else {
                 elements.readingBooksContainer.innerHTML = createEmptyState(
                     'No books in progress',
-                    'Start a book from your Want to Read list',
-                    '📖'
+                    'Start a book from your Want to Read list'
                 );
             }
 
@@ -1086,8 +993,7 @@
             } else {
                 elements.wantToReadBooksContainer.innerHTML = createEmptyState(
                     'Your reading list is empty',
-                    'Add some books you want to read',
-                    '📚'
+                    'Add some books you want to read'
                 );
             }
 
@@ -1099,8 +1005,7 @@
             } else {
                 elements.completedBooksContainer.innerHTML = createEmptyState(
                     'No completed books yet',
-                    'Finish reading a book to see it here',
-                    '🏆'
+                    'Finish reading a book to see it here'
                 );
             }
         }
@@ -1111,7 +1016,7 @@
 
             isLoading = true;
             elements.refreshBtn.disabled = true;
-            elements.refreshBtn.innerHTML = '⏳ LOADING...';
+            elements.refreshBtn.textContent = 'LOADING...';
 
             try {
                 const response = await fetch(`${API_BASE_URL}/books/`, {
@@ -1134,8 +1039,7 @@
 
                 const errorState = createEmptyState(
                     'Connection Error',
-                    'Unable to connect to the API',
-                    '⚠️'
+                    'Unable to connect to the API'
                 );
 
                 elements.readingBooksContainer.innerHTML = errorState;
@@ -1145,7 +1049,7 @@
             } finally {
                 isLoading = false;
                 elements.refreshBtn.disabled = false;
-                elements.refreshBtn.innerHTML = '🔄 REFRESH';
+                elements.refreshBtn.textContent = 'REFRESH';
             }
         }
 
@@ -1183,7 +1087,7 @@
 
                 if (!response.ok) throw new Error('Failed to start book');
 
-                showToast('📖 Book moved to Currently Reading!', 'success');
+                showToast('Book moved to Currently Reading', 'success');
                 fetchBooks();
 
             } catch (error) {
@@ -1208,7 +1112,7 @@
 
                 if (!response.ok) throw new Error('Failed to update book');
 
-                showToast('🔄 Ready to re-read!', 'success');
+                showToast('Ready to re-read', 'success');
                 fetchBooks();
 
             } catch (error) {
@@ -1247,7 +1151,7 @@
                             date_finished: new Date().toISOString()
                         })
                     });
-                    showToast('🎉 Congratulations! Book completed!', 'success');
+                    showToast('Congratulations! Book completed', 'success');
                 } else {
                     showToast(`Updated to page ${newPage}`, 'success');
                 }
@@ -1317,7 +1221,7 @@
 
                 if (!response.ok) throw new Error('Failed to add book');
 
-                showToast('📚 Book added successfully!', 'success');
+                showToast('Book added successfully', 'success');
                 closeModal('addBookModal');
                 fetchBooks();
 
@@ -1367,7 +1271,7 @@
                         await updatePages(currentBookForSession, newPage);
                     }
 
-                    showToast(`📖 Reading session logged!`, 'success');
+                    showToast('Reading session logged', 'success');
                     closeModal('logReadingModal');
                     fetchBooks();
 
