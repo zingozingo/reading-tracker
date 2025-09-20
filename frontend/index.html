@@ -15,7 +15,6 @@
             --bg-primary: #0d1117;
             --bg-secondary: #161b22;
             --bg-card: #1c2128;
-            --bg-hover: #262c36;
             --text-primary: #e6edf3;
             --text-secondary: #8b949e;
             --text-muted: #6e7681;
@@ -38,13 +37,11 @@
         /* Navigation Bar */
         nav {
             background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--accent-blue);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(22, 27, 34, 0.95);
         }
 
         .nav-container {
@@ -60,15 +57,15 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.75rem;
+            font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
         }
 
         .nav-brand::before {
             content: "📚";
-            font-size: 1.75rem;
+            font-size: 2rem;
         }
 
         .nav-links {
@@ -77,26 +74,20 @@
             align-items: center;
         }
 
+        /* Static Buttons - No Effects */
         .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            border: 2px solid;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .btn:hover {
-            background: var(--bg-hover);
-            border-color: var(--accent-blue);
-            transform: translateY(-1px);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-primary {
@@ -105,9 +96,32 @@
             color: #ffffff;
         }
 
-        .btn-primary:hover {
-            background: #4493e4;
-            border-color: #4493e4;
+        .btn-success {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: #ffffff;
+        }
+
+        .btn-warning {
+            background: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            color: #000000;
+        }
+
+        .btn-danger {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: #ffffff;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-large {
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
         }
 
         /* Main Container */
@@ -120,99 +134,133 @@
         /* Stats Section */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.75rem;
             text-align: center;
         }
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        /* Section Headers */
-        .section {
-            margin-bottom: 2.5rem;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .section-count {
-            background: var(--bg-secondary);
-            padding: 0.125rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        /* Book Grid */
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        /* Book Card */
-        .book-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .book-card::before {
+        .stat-card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: var(--accent-blue);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
         }
 
-        .book-card:hover {
-            background: var(--bg-hover);
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        .book-card:hover::before {
-            transform: scaleX(1);
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-sublabel {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 3rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-title-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-icon {
+            font-size: 1.75rem;
+        }
+
+        .section-count {
+            background: var(--accent-blue);
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .section-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Book Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.75rem;
+        }
+
+        /* Book Card */
+        .book-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.75rem;
+            position: relative;
+        }
+
+        .book-card.completed {
+            background: #1a2f1a;
+            border-color: var(--accent-green);
+        }
+
+        .completion-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
         }
 
         .book-header {
@@ -220,10 +268,10 @@
         }
 
         .book-title {
-            font-size: 1.125rem;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.375rem;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -231,8 +279,9 @@
         }
 
         .book-author {
-            font-size: 0.875rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
+            font-style: italic;
         }
 
         .book-metadata {
@@ -244,127 +293,290 @@
         }
 
         .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 16px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .status-reading {
-            background: rgba(88, 166, 255, 0.1);
+            background: rgba(88, 166, 255, 0.2);
             color: var(--accent-blue);
-            border: 1px solid rgba(88, 166, 255, 0.2);
+            border: 1px solid var(--accent-blue);
         }
 
         .status-want-to-read {
-            background: rgba(210, 153, 34, 0.1);
+            background: rgba(210, 153, 34, 0.2);
             color: var(--accent-yellow);
-            border: 1px solid rgba(210, 153, 34, 0.2);
+            border: 1px solid var(--accent-yellow);
         }
 
         .status-completed {
-            background: rgba(63, 185, 80, 0.1);
+            background: rgba(63, 185, 80, 0.2);
             color: var(--accent-green);
-            border: 1px solid rgba(63, 185, 80, 0.2);
+            border: 1px solid var(--accent-green);
         }
 
         .book-pages {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         /* Progress Bar */
         .progress-container {
-            margin-top: 1rem;
+            margin: 1.25rem 0;
         }
 
         .progress-label {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
+            font-weight: 600;
         }
 
         .progress-bar {
             background: var(--progress-bg);
-            border-radius: 4px;
-            height: 8px;
+            border-radius: 8px;
+            height: 12px;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
 
         .progress-fill {
             height: 100%;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            background: linear-gradient(90deg, var(--accent-blue), #4493e4);
+            border-radius: 8px;
+            background: var(--accent-blue);
         }
 
         .progress-fill.completed {
-            background: linear-gradient(90deg, var(--accent-green), #2ea043);
+            background: var(--accent-green);
         }
 
         .progress-fill.want-to-read {
-            background: linear-gradient(90deg, var(--accent-yellow), #b87a00);
+            background: var(--accent-yellow);
+        }
+
+        /* Book Actions */
+        .book-actions {
+            margin-top: 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-update {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .page-input {
+            width: 80px;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .page-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-blue);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.75rem;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .duration-display {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--accent-green);
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border: 2px solid var(--accent-green);
+        }
+
+        /* Toast Notifications - Static */
+        .toast-container {
+            position: fixed;
+            top: 5rem;
+            right: 2rem;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            min-width: 320px;
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            pointer-events: auto;
+        }
+
+        .toast.success {
+            border-color: var(--accent-green);
+        }
+
+        .toast.error {
+            border-color: var(--accent-red);
+        }
+
+        .toast.info {
+            border-color: var(--accent-blue);
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast-message {
+            flex: 1;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
             color: var(--text-secondary);
         }
 
         .empty-state-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
-            opacity: 0.5;
+            opacity: 0.6;
+        }
+
+        .empty-state-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
         }
 
         .empty-state-text {
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 1.5rem;
-        }
-
-        /* Loading State */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 200px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--accent-blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Error State */
-        .error-message {
-            background: rgba(248, 81, 73, 0.1);
-            border: 1px solid rgba(248, 81, 73, 0.3);
-            border-radius: 8px;
-            padding: 1rem;
-            color: var(--accent-red);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .error-icon {
-            font-size: 1.25rem;
         }
 
         /* Add Book Button */
@@ -372,26 +584,18 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: var(--accent-blue);
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
-            transition: all 0.3s ease;
             z-index: 50;
-        }
-
-        .fab:hover {
-            background: #4493e4;
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
         }
 
         /* Responsive Design */
@@ -414,29 +618,24 @@
             }
 
             .stats-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .fab {
                 bottom: 1rem;
                 right: 1rem;
+                width: 56px;
+                height: 56px;
             }
-        }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
+            .form-row {
+                grid-template-columns: 1fr;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
-        .fade-in {
-            animation: fadeIn 0.5s ease;
+            .toast-container {
+                right: 1rem;
+                left: 1rem;
+            }
         }
     </style>
 </head>
@@ -446,11 +645,11 @@
         <div class="nav-container">
             <a href="#" class="nav-brand">BookTracker</a>
             <div class="nav-links">
-                <button id="refreshBtn" class="btn" title="Refresh Data">
+                <button id="refreshBtn" class="btn btn-primary">
                     🔄 Refresh
                 </button>
-                <a href="http://localhost:8000/docs" target="_blank" class="btn btn-primary">
-                    🚀 API Playground
+                <a href="http://localhost:8000/docs" target="_blank" class="btn btn-warning">
+                    🚀 API Docs
                 </a>
             </div>
         </div>
@@ -461,53 +660,79 @@
         <!-- Stats Section -->
         <div class="stats-container" id="statsContainer">
             <div class="stat-card">
+                <div class="stat-icon">📚</div>
                 <div class="stat-value" id="totalBooks">0</div>
                 <div class="stat-label">Total Books</div>
+                <div class="stat-sublabel" id="totalPagesRead">0 pages read</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">📖</div>
                 <div class="stat-value" id="currentlyReading">0</div>
                 <div class="stat-label">Currently Reading</div>
+                <div class="stat-sublabel" id="readingProgress">0% average progress</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="completedBooks">0</div>
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="completedBooksCount">0</div>
                 <div class="stat-label">Completed</div>
+                <div class="stat-sublabel">Great job!</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">📋</div>
                 <div class="stat-value" id="wantToRead">0</div>
                 <div class="stat-label">Want to Read</div>
+                <div class="stat-sublabel">In your queue</div>
             </div>
         </div>
 
         <!-- Currently Reading Section -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">📖 Currently Reading</span>
-                <span class="section-count" id="readingCount">0</span>
+                <div class="section-title-group">
+                    <div class="section-title">
+                        <span class="section-icon">📖</span>
+                        <span>Currently Reading</span>
+                    </div>
+                    <span class="section-count" id="readingCount">0</span>
+                </div>
+                <span class="section-description">Books you're actively reading</span>
             </div>
-            <div id="readingBooks" class="books-grid">
-                <div class="loading"><div class="spinner"></div></div>
+            <div id="readingBooksContainer" class="books-grid">
+                <!-- Books will be rendered here -->
             </div>
         </div>
 
         <!-- Want to Read Section -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">📚 Want to Read</span>
-                <span class="section-count" id="wantToReadCount">0</span>
+                <div class="section-title-group">
+                    <div class="section-title">
+                        <span class="section-icon">📚</span>
+                        <span>Want to Read</span>
+                    </div>
+                    <span class="section-count" id="wantToReadCount">0</span>
+                </div>
+                <span class="section-description">Your reading queue</span>
             </div>
-            <div id="wantToReadBooks" class="books-grid">
-                <div class="loading"><div class="spinner"></div></div>
+            <div id="wantToReadBooksContainer" class="books-grid">
+                <!-- Books will be rendered here -->
             </div>
         </div>
 
         <!-- Completed Section -->
         <div class="section">
             <div class="section-header">
-                <span class="section-title">✅ Completed</span>
-                <span class="section-count" id="completedCount">0</span>
+                <div class="section-title-group">
+                    <div class="section-title">
+                        <span class="section-icon">🏆</span>
+                        <span>Completed</span>
+                    </div>
+                    <span class="section-count" id="completedCount">0</span>
+                </div>
+                <span class="section-description">Books you've finished - congratulations!</span>
             </div>
-            <div id="completedBooks" class="books-grid">
-                <div class="loading"><div class="spinner"></div></div>
+            <div id="completedBooksContainer" class="books-grid">
+                <!-- Books will be rendered here -->
             </div>
         </div>
     </div>
@@ -517,6 +742,92 @@
         +
     </button>
 
+    <!-- Add Book Modal -->
+    <div id="addBookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📚 Add New Book</h2>
+                <button class="close-btn" onclick="closeModal('addBookModal')">&times;</button>
+            </div>
+            <form id="addBookForm">
+                <div class="form-group">
+                    <label class="form-label" for="bookTitle">Title</label>
+                    <input type="text" id="bookTitle" class="form-input" required placeholder="Enter book title">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="bookAuthor">Author</label>
+                    <input type="text" id="bookAuthor" class="form-input" required placeholder="Enter author name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="bookIsbn">ISBN (Optional)</label>
+                    <input type="text" id="bookIsbn" class="form-input" placeholder="Enter ISBN">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="bookTotalPages">Total Pages</label>
+                        <input type="number" id="bookTotalPages" class="form-input" required min="10" placeholder="Pages">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="bookCurrentPage">Current Page</label>
+                        <input type="number" id="bookCurrentPage" class="form-input" min="0" placeholder="Current">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="bookStatus">Status</label>
+                    <select id="bookStatus" class="form-select" required>
+                        <option value="want_to_read">Want to Read</option>
+                        <option value="reading">Currently Reading</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" onclick="closeModal('addBookModal')">Cancel</button>
+                    <button type="submit" class="btn btn-success btn-large">Add Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Log Reading Modal -->
+    <div id="logReadingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📖 Log Reading Session</h2>
+                <button class="close-btn" onclick="closeModal('logReadingModal')">&times;</button>
+            </div>
+            <form id="logReadingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="sessionStartTime">Start Time</label>
+                        <input type="datetime-local" id="sessionStartTime" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="sessionEndTime">End Time</label>
+                        <input type="datetime-local" id="sessionEndTime" class="form-input" required>
+                    </div>
+                </div>
+                <div class="duration-display" id="durationDisplay">
+                    ⏱️ Duration: 0 minutes
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="pagesRead">Pages Read</label>
+                    <input type="number" id="pagesRead" class="form-input" required min="0" placeholder="How many pages did you read?">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="sessionNotes">Notes (Optional)</label>
+                    <textarea id="sessionNotes" class="form-textarea" rows="3" placeholder="Any thoughts about this reading session?"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" onclick="closeModal('logReadingModal')">Cancel</button>
+                    <button type="submit" class="btn btn-success btn-large">Save Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
         // API Configuration
         const API_BASE_URL = 'http://localhost:8000/api/v1';
@@ -524,22 +835,55 @@
         // State Management
         let books = [];
         let isLoading = false;
+        let currentBookForSession = null;
 
         // DOM Elements
         const elements = {
-            readingBooks: document.getElementById('readingBooks'),
-            wantToReadBooks: document.getElementById('wantToReadBooks'),
-            completedBooks: document.getElementById('completedBooks'),
+            readingBooksContainer: document.getElementById('readingBooksContainer'),
+            wantToReadBooksContainer: document.getElementById('wantToReadBooksContainer'),
+            completedBooksContainer: document.getElementById('completedBooksContainer'),
             readingCount: document.getElementById('readingCount'),
             wantToReadCount: document.getElementById('wantToReadCount'),
             completedCount: document.getElementById('completedCount'),
             totalBooks: document.getElementById('totalBooks'),
             currentlyReading: document.getElementById('currentlyReading'),
-            completedBooksCount: document.getElementById('completedBooks'),
+            completedBooksCount: document.getElementById('completedBooksCount'),
             wantToReadStat: document.getElementById('wantToRead'),
+            totalPagesRead: document.getElementById('totalPagesRead'),
+            readingProgress: document.getElementById('readingProgress'),
             refreshBtn: document.getElementById('refreshBtn'),
-            addBookBtn: document.getElementById('addBookBtn')
+            addBookBtn: document.getElementById('addBookBtn'),
+            addBookModal: document.getElementById('addBookModal'),
+            addBookForm: document.getElementById('addBookForm'),
+            logReadingModal: document.getElementById('logReadingModal'),
+            logReadingForm: document.getElementById('logReadingForm'),
+            toastContainer: document.getElementById('toastContainer')
         };
+
+        // Toast Notifications - No animation
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icons = {
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️',
+                warning: '⚠️'
+            };
+
+            toast.innerHTML = `
+                <span class="toast-icon">${icons[type]}</span>
+                <span class="toast-message">${message}</span>
+            `;
+
+            elements.toastContainer.appendChild(toast);
+
+            // Simple removal after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
 
         // Utility Functions
         function formatStatus(status) {
@@ -569,16 +913,72 @@
             return progressMap[status] || '';
         }
 
-        // Create Book Card HTML
+        // Set current datetime
+        function setCurrentDateTime() {
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            document.getElementById('sessionStartTime').value = localDateTime;
+            document.getElementById('sessionEndTime').value = localDateTime;
+        }
+
+        // Calculate duration
+        function calculateDuration() {
+            const startTime = new Date(document.getElementById('sessionStartTime').value);
+            const endTime = new Date(document.getElementById('sessionEndTime').value);
+
+            if (startTime && endTime && endTime > startTime) {
+                const diff = endTime - startTime;
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+
+                if (hours > 0) {
+                    document.getElementById('durationDisplay').textContent = `⏱️ Duration: ${hours}h ${remainingMinutes}m`;
+                } else {
+                    document.getElementById('durationDisplay').textContent = `⏱️ Duration: ${minutes} minutes`;
+                }
+            } else {
+                document.getElementById('durationDisplay').textContent = '⏱️ Duration: 0 minutes';
+            }
+        }
+
+        // Create Book Card
         function createBookCard(book) {
+            // Skip invalid books
+            if (!book || book.total_pages <= 10) {
+                return '';
+            }
+
             const progress = calculateProgress(book.current_page, book.total_pages);
             const statusClass = getStatusClass(book.status);
             const progressClass = getProgressClass(book.status);
 
+            let actionButton = '';
+            if (book.status === 'reading') {
+                actionButton = `
+                    <button class="btn btn-primary btn-large" onclick="openLogReadingModal(${book.id})">
+                        📝 LOG READING
+                    </button>
+                `;
+            } else if (book.status === 'want_to_read') {
+                actionButton = `
+                    <button class="btn btn-success btn-large" onclick="startBook(${book.id})">
+                        ▶️ START BOOK
+                    </button>
+                `;
+            } else if (book.status === 'completed') {
+                actionButton = `
+                    <button class="btn btn-warning btn-large" onclick="rereadBook(${book.id})">
+                        🔄 RE-READ
+                    </button>
+                `;
+            }
+
             return `
-                <div class="book-card fade-in" data-book-id="${book.id}">
+                <div class="book-card ${book.status === 'completed' ? 'completed' : ''}" data-book-id="${book.id}">
+                    ${book.status === 'completed' ? '<div class="completion-badge">🏆</div>' : ''}
                     <div class="book-header">
-                        <h3 class="book-title" title="${book.title}">${book.title}</h3>
+                        <h3 class="book-title">${book.title}</h3>
                         <p class="book-author">by ${book.author}</p>
                     </div>
                     <div class="book-metadata">
@@ -586,123 +986,132 @@
                             ${formatStatus(book.status)}
                         </span>
                         <span class="book-pages">
-                            ${book.current_page} / ${book.total_pages} pages
+                            📄 ${book.current_page} / ${book.total_pages} pages
                         </span>
                     </div>
                     ${book.rating ? `
-                        <div style="margin-bottom: 0.75rem; color: var(--accent-yellow);">
+                        <div style="margin: 0.75rem 0; font-size: 1.25rem;">
                             ${'⭐'.repeat(book.rating)}
                         </div>
                     ` : ''}
                     <div class="progress-container">
                         <div class="progress-label">
                             <span>Progress</span>
-                            <span>${progress}%</span>
+                            <span style="font-size: 1rem; color: var(--accent-blue);">${progress}%</span>
                         </div>
-                        <div class="progress-bar">
+                        <div class="progress-bar" onclick="handleProgressClick(event, ${book.id}, ${book.total_pages})">
                             <div class="progress-fill ${progressClass}" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        ${actionButton}
+                        <div class="page-update">
+                            <input type="number" class="page-input" id="pages-${book.id}"
+                                   value="${book.current_page}" min="0" max="${book.total_pages}"
+                                   onchange="updatePages(${book.id}, this.value)">
+                            <button class="btn btn-danger btn-small" onclick="deleteBook(${book.id})">
+                                🗑️
+                            </button>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // Create Empty State HTML
-        function createEmptyState(message, icon = '📚') {
+        // Create Empty State
+        function createEmptyState(title, message, icon = '📚') {
             return `
                 <div class="empty-state">
                     <div class="empty-state-icon">${icon}</div>
+                    <div class="empty-state-title">${title}</div>
                     <p class="empty-state-text">${message}</p>
                 </div>
             `;
         }
 
-        // Create Error Message HTML
-        function createErrorMessage(message) {
-            return `
-                <div class="error-message">
-                    <span class="error-icon">⚠️</span>
-                    <span>${message}</span>
-                </div>
-            `;
-        }
-
-        // Group Books by Status
-        function groupBooksByStatus(books) {
+        // Render Books
+        function renderBooks() {
             const groups = {
                 reading: [],
                 want_to_read: [],
                 completed: []
             };
 
+            // Group books
             books.forEach(book => {
-                if (groups[book.status]) {
+                if (book.total_pages > 10 && groups[book.status]) {
                     groups[book.status].push(book);
                 }
             });
 
-            return groups;
-        }
+            // Calculate stats
+            const totalBooksCount = groups.reading.length + groups.want_to_read.length + groups.completed.length;
+            const totalPages = books.reduce((sum, book) => sum + (book.current_page || 0), 0);
+            const avgProgress = groups.reading.length > 0
+                ? Math.round(groups.reading.reduce((sum, book) =>
+                    sum + calculateProgress(book.current_page, book.total_pages), 0) / groups.reading.length)
+                : 0;
 
-        // Update Stats
-        function updateStats(groups) {
-            const total = books.length;
-            const reading = groups.reading.length;
-            const wantToRead = groups.want_to_read.length;
-            const completed = groups.completed.length;
+            // Update stats
+            elements.totalBooks.textContent = totalBooksCount;
+            elements.currentlyReading.textContent = groups.reading.length;
+            elements.completedBooksCount.textContent = groups.completed.length;
+            elements.wantToReadStat.textContent = groups.want_to_read.length;
+            elements.totalPagesRead.textContent = `${totalPages} pages read`;
+            elements.readingProgress.textContent = `${avgProgress}% average progress`;
 
-            // Update stat cards
-            elements.totalBooks.textContent = total;
-            elements.currentlyReading.textContent = reading;
-            elements.completedBooksCount.textContent = completed;
-            elements.wantToReadStat.textContent = wantToRead;
-
-            // Update section counts
-            elements.readingCount.textContent = reading;
-            elements.wantToReadCount.textContent = wantToRead;
-            elements.completedCount.textContent = completed;
-        }
-
-        // Render Books
-        function renderBooks() {
-            const groups = groupBooksByStatus(books);
-            updateStats(groups);
+            // Update counts
+            elements.readingCount.textContent = groups.reading.length;
+            elements.wantToReadCount.textContent = groups.want_to_read.length;
+            elements.completedCount.textContent = groups.completed.length;
 
             // Render Currently Reading
             if (groups.reading.length > 0) {
-                elements.readingBooks.innerHTML = groups.reading
+                elements.readingBooksContainer.innerHTML = groups.reading
                     .map(book => createBookCard(book))
                     .join('');
             } else {
-                elements.readingBooks.innerHTML = createEmptyState('No books currently being read', '📖');
+                elements.readingBooksContainer.innerHTML = createEmptyState(
+                    'No books in progress',
+                    'Start a book from your Want to Read list',
+                    '📖'
+                );
             }
 
             // Render Want to Read
             if (groups.want_to_read.length > 0) {
-                elements.wantToReadBooks.innerHTML = groups.want_to_read
+                elements.wantToReadBooksContainer.innerHTML = groups.want_to_read
                     .map(book => createBookCard(book))
                     .join('');
             } else {
-                elements.wantToReadBooks.innerHTML = createEmptyState('Your reading list is empty', '📚');
+                elements.wantToReadBooksContainer.innerHTML = createEmptyState(
+                    'Your reading list is empty',
+                    'Add some books you want to read',
+                    '📚'
+                );
             }
 
             // Render Completed
             if (groups.completed.length > 0) {
-                elements.completedBooks.innerHTML = groups.completed
+                elements.completedBooksContainer.innerHTML = groups.completed
                     .map(book => createBookCard(book))
                     .join('');
             } else {
-                elements.completedBooks.innerHTML = createEmptyState('No completed books yet', '✅');
+                elements.completedBooksContainer.innerHTML = createEmptyState(
+                    'No completed books yet',
+                    'Finish reading a book to see it here',
+                    '🏆'
+                );
             }
         }
 
-        // Fetch Books from API
+        // Fetch Books
         async function fetchBooks() {
             if (isLoading) return;
 
             isLoading = true;
             elements.refreshBtn.disabled = true;
-            elements.refreshBtn.innerHTML = '⏳ Loading...';
+            elements.refreshBtn.innerHTML = '⏳ LOADING...';
 
             try {
                 const response = await fetch(`${API_BASE_URL}/books/`, {
@@ -721,25 +1130,160 @@
 
             } catch (error) {
                 console.error('Error fetching books:', error);
+                showToast('Failed to load books', 'error');
 
-                // Show error in all sections
-                const errorHtml = createErrorMessage(
-                    `Failed to load books. Please ensure the API is running on port 8000. ${error.message}`
+                const errorState = createEmptyState(
+                    'Connection Error',
+                    'Unable to connect to the API',
+                    '⚠️'
                 );
 
-                elements.readingBooks.innerHTML = errorHtml;
-                elements.wantToReadBooks.innerHTML = errorHtml;
-                elements.completedBooks.innerHTML = errorHtml;
+                elements.readingBooksContainer.innerHTML = errorState;
+                elements.wantToReadBooksContainer.innerHTML = errorState;
+                elements.completedBooksContainer.innerHTML = errorState;
 
-                // Reset stats
-                elements.totalBooks.textContent = '0';
-                elements.currentlyReading.textContent = '0';
-                elements.completedBooksCount.textContent = '0';
-                elements.wantToReadStat.textContent = '0';
             } finally {
                 isLoading = false;
                 elements.refreshBtn.disabled = false;
-                elements.refreshBtn.innerHTML = '🔄 Refresh';
+                elements.refreshBtn.innerHTML = '🔄 REFRESH';
+            }
+        }
+
+        // Modal Functions
+        function openLogReadingModal(bookId) {
+            currentBookForSession = bookId;
+            setCurrentDateTime();
+            calculateDuration();
+            elements.logReadingModal.classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+            if (modalId === 'addBookModal') {
+                elements.addBookForm.reset();
+            } else if (modalId === 'logReadingModal') {
+                elements.logReadingForm.reset();
+                currentBookForSession = null;
+            }
+        }
+
+        // CRUD Operations
+        async function startBook(bookId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        status: 'reading',
+                        date_started: new Date().toISOString()
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to start book');
+
+                showToast('📖 Book moved to Currently Reading!', 'success');
+                fetchBooks();
+
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to start book', 'error');
+            }
+        }
+
+        async function rereadBook(bookId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        status: 'reading',
+                        current_page: 0,
+                        date_started: new Date().toISOString()
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to update book');
+
+                showToast('🔄 Ready to re-read!', 'success');
+                fetchBooks();
+
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to update book', 'error');
+            }
+        }
+
+        async function updatePages(bookId, value) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+
+            const newPage = Math.max(0, Math.min(parseInt(value) || 0, book.total_pages));
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        current_page: newPage
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to update');
+
+                if (newPage >= book.total_pages && book.status === 'reading') {
+                    await fetch(`${API_BASE_URL}/books/${bookId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            status: 'completed',
+                            date_finished: new Date().toISOString()
+                        })
+                    });
+                    showToast('🎉 Congratulations! Book completed!', 'success');
+                } else {
+                    showToast(`Updated to page ${newPage}`, 'success');
+                }
+
+                fetchBooks();
+
+            } catch (error) {
+                showToast('Failed to update pages', 'error');
+            }
+        }
+
+        async function handleProgressClick(event, bookId, totalPages) {
+            const progressBar = event.currentTarget;
+            const rect = progressBar.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const percentage = Math.max(0, Math.min(x / rect.width, 1));
+            const newPage = Math.round(percentage * totalPages);
+
+            await updatePages(bookId, newPage);
+        }
+
+        async function deleteBook(bookId) {
+            if (!confirm('Delete this book?')) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) throw new Error('Failed to delete');
+
+                showToast('Book deleted', 'success');
+                fetchBooks();
+
+            } catch (error) {
+                showToast('Failed to delete book', 'error');
             }
         }
 
@@ -747,37 +1291,110 @@
         elements.refreshBtn.addEventListener('click', fetchBooks);
 
         elements.addBookBtn.addEventListener('click', () => {
-            alert('Add Book feature coming soon! For now, please use the API Playground (Swagger UI) to add books.');
+            elements.addBookModal.classList.add('show');
         });
 
-        // Handle book card clicks
-        document.addEventListener('click', (e) => {
-            const bookCard = e.target.closest('.book-card');
-            if (bookCard) {
-                const bookId = bookCard.dataset.bookId;
-                console.log('Book clicked:', bookId);
-                // Future: Open book detail modal or navigate to book page
+        elements.addBookForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const bookData = {
+                title: document.getElementById('bookTitle').value,
+                author: document.getElementById('bookAuthor').value,
+                isbn: document.getElementById('bookIsbn').value || null,
+                total_pages: parseInt(document.getElementById('bookTotalPages').value),
+                current_page: parseInt(document.getElementById('bookCurrentPage').value) || 0,
+                status: document.getElementById('bookStatus').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/books/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bookData)
+                });
+
+                if (!response.ok) throw new Error('Failed to add book');
+
+                showToast('📚 Book added successfully!', 'success');
+                closeModal('addBookModal');
+                fetchBooks();
+
+            } catch (error) {
+                showToast('Failed to add book', 'error');
             }
         });
 
-        // Initialize on page load
+        elements.logReadingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (currentBookForSession) {
+                const sessionData = {
+                    start_time: new Date(document.getElementById('sessionStartTime').value).toISOString(),
+                    pages_read: parseInt(document.getElementById('pagesRead').value),
+                    notes: document.getElementById('sessionNotes').value || null
+                };
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/books/${currentBookForSession}/sessions`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(sessionData)
+                    });
+
+                    if (!response.ok) throw new Error('Failed to create session');
+
+                    const session = await response.json();
+
+                    // End session
+                    await fetch(`${API_BASE_URL}/sessions/${session.id}/end`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            end_time: new Date(document.getElementById('sessionEndTime').value).toISOString()
+                        })
+                    });
+
+                    // Update book pages
+                    const book = books.find(b => b.id === currentBookForSession);
+                    if (book) {
+                        const newPage = Math.min(book.current_page + sessionData.pages_read, book.total_pages);
+                        await updatePages(currentBookForSession, newPage);
+                    }
+
+                    showToast(`📖 Reading session logged!`, 'success');
+                    closeModal('logReadingModal');
+                    fetchBooks();
+
+                } catch (error) {
+                    showToast('Failed to log session', 'error');
+                }
+            }
+        });
+
+        // Time input listeners
+        document.getElementById('sessionStartTime')?.addEventListener('change', calculateDuration);
+        document.getElementById('sessionEndTime')?.addEventListener('change', calculateDuration);
+
+        // Modal background click
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                if (e.target === elements.addBookModal) {
+                    closeModal('addBookModal');
+                } else if (e.target === elements.logReadingModal) {
+                    closeModal('logReadingModal');
+                }
+            }
+        });
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             fetchBooks();
-
-            // Auto-refresh every 30 seconds
-            setInterval(fetchBooks, 30000);
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Press 'r' to refresh
-            if (e.key === 'r' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT') {
-                fetchBooks();
-            }
-            // Press 'a' to add book
-            if (e.key === 'a' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT') {
-                elements.addBookBtn.click();
-            }
         });
     </script>
 </body>
