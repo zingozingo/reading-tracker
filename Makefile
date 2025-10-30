@@ -225,9 +225,22 @@ logs-all: ## View all logs (backend + frontend, normal + error)
 # Testing & Quality
 # ============================================================
 
-test: ## Run tests (when implemented)
-	@echo "$(YELLOW)Running tests...$(NC)"
-	@$(PYTHON) -m pytest tests/ -v 2>/dev/null || echo "$(RED)Tests not yet implemented$(NC)"
+test: ## Run all tests with pytest
+	@echo "$(GREEN)Running tests...$(NC)"
+	@echo ""
+	@$(PYTHON) -m pytest tests/ -v --tb=short
+	@echo ""
+
+test-verbose: ## Run tests with detailed output
+	@echo "$(GREEN)Running tests with verbose output...$(NC)"
+	@$(PYTHON) -m pytest tests/ -vv --tb=long
+
+test-coverage: ## Run tests with coverage report
+	@echo "$(GREEN)Running tests with coverage...$(NC)"
+	@$(PYTHON) -m pytest tests/ --cov=app --cov-report=term-missing || echo "$(RED)pytest-cov not installed. Run: pip install pytest-cov$(NC)"
+
+test-quick: ## Run tests without verbose output
+	@$(PYTHON) -m pytest tests/ --tb=short -q
 
 lint: ## Run linting checks
 	@echo "$(YELLOW)Running linting...$(NC)"
