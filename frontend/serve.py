@@ -39,6 +39,8 @@ def main():
     print(f"🌐 Server starting on port {PORT}...")
 
     try:
+        # Allow socket reuse to prevent "Address already in use" errors
+        socketserver.TCPServer.allow_reuse_address = True
         with socketserver.TCPServer(("", PORT), MyHTTPRequestHandler) as httpd:
             print(f"\n✅ Server running successfully!")
             print(f"\n📱 Access the dashboard at:")
