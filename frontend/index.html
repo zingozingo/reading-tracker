@@ -310,7 +310,6 @@
             background: var(--bg-primary);
             height: 4px;
             position: relative;
-            cursor: pointer;
         }
 
         .progress-fill {
@@ -347,14 +346,15 @@
             padding: 3px 4px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            color: var(--text-primary);
+            color: var(--text-secondary);
             font-size: 10px;
             text-align: center;
+            cursor: default;
         }
 
-        .page-input:focus {
-            outline: none;
-            border-color: var(--forest-primary);
+        .page-input[readonly] {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         /* Modal */
@@ -721,22 +721,39 @@
                 <button class="close-btn" onclick="closeModal('logReadingModal')">&times;</button>
             </div>
             <form id="logReadingForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label" for="sessionStartTime">Start Time</label>
-                        <input type="datetime-local" id="sessionStartTime" class="form-input" required>
+                <div class="form-group">
+                    <div style="background: var(--bg-secondary); padding: 8px; margin-bottom: 10px; border: 1px solid var(--border-color); text-align: center;">
+                        <div style="font-size: 11px; color: var(--text-secondary);">Currently on page</div>
+                        <div id="currentPageDisplay" style="font-size: 20px; color: var(--forest-primary); font-weight: 600;">--</div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="sessionEndTime">End Time</label>
-                        <input type="datetime-local" id="sessionEndTime" class="form-input" required>
-                    </div>
-                </div>
-                <div class="duration-display" id="durationDisplay">
-                    Duration: 0 minutes
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="pagesRead">Pages Read</label>
-                    <input type="number" id="pagesRead" class="form-input" required min="0" placeholder="How many pages did you read?">
+                    <label class="form-label" for="newCurrentPage">What page are you on now?</label>
+                    <input type="number" id="newCurrentPage" class="form-input" required min="0" placeholder="Enter your current page number">
+                    <div id="pagesReadCalculated" style="font-size: 11px; color: var(--forest-primary); margin-top: 4px; text-align: center;">
+                        Pages read will be calculated automatically
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px;">
+                        <input type="checkbox" id="useCurrentTime" checked onchange="toggleTimeInputs()">
+                        Use current time (recommended)
+                    </label>
+                </div>
+                <div id="timeInputsContainer" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="sessionStartTime">Start Time</label>
+                            <input type="datetime-local" id="sessionStartTime" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sessionEndTime">End Time</label>
+                            <input type="datetime-local" id="sessionEndTime" class="form-input">
+                        </div>
+                    </div>
+                    <div class="duration-display" id="durationDisplay">
+                        Duration: 0 minutes
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="sessionNotes">Notes (Optional)</label>
@@ -908,7 +925,7 @@
                             <span>Progress</span>
                             <span>${progress}%</span>
                         </div>
-                        <div class="progress-bar" onclick="handleProgressClick(event, ${book.id}, ${book.total_pages})">
+                        <div class="progress-bar">
                             <div class="progress-fill ${progressClass}" style="width: ${progress}%"></div>
                         </div>
                     </div>
@@ -917,7 +934,7 @@
                         <div class="page-update">
                             <input type="number" class="page-input" id="pages-${book.id}"
                                    value="${book.current_page}" min="0" max="${book.total_pages}"
-                                   onchange="updatePages(${book.id}, this.value)">
+                                   readonly title="Update page through LOG button">
                             <button class="btn btn-danger btn-small" onclick="deleteBook(${book.id})">
                                 DEL
                             </button>
@@ -1056,9 +1073,53 @@
         // Modal Functions
         function openLogReadingModal(bookId) {
             currentBookForSession = bookId;
+            const book = books.find(b => b.id === bookId);
+
+            if (book) {
+                // Show current page
+                document.getElementById('currentPageDisplay').textContent = book.current_page;
+
+                // Set new page input to suggest next logical page
+                const suggestedPage = Math.min(book.current_page + 25, book.total_pages);
+                document.getElementById('newCurrentPage').value = suggestedPage;
+                document.getElementById('newCurrentPage').max = book.total_pages;
+
+                // Update calculated pages read
+                updatePagesReadCalculation(book.current_page, suggestedPage);
+            }
+
+            // Set time fields to current time
             setCurrentDateTime();
             calculateDuration();
+
+            // Reset checkbox to use current time
+            document.getElementById('useCurrentTime').checked = true;
+            toggleTimeInputs();
+
             elements.logReadingModal.classList.add('show');
+        }
+
+        function toggleTimeInputs() {
+            const useCurrentTime = document.getElementById('useCurrentTime').checked;
+            const timeContainer = document.getElementById('timeInputsContainer');
+            timeContainer.style.display = useCurrentTime ? 'none' : 'block';
+        }
+
+        function updatePagesReadCalculation(currentPage, newPage) {
+            const pagesRead = Math.max(0, newPage - currentPage);
+            const displayEl = document.getElementById('pagesReadCalculated');
+
+            if (pagesRead > 0) {
+                displayEl.textContent = `Will log ${pagesRead} pages read (${currentPage} → ${newPage})`;
+                displayEl.style.color = 'var(--forest-primary)';
+                displayEl.style.fontWeight = '600';
+            } else if (pagesRead === 0) {
+                displayEl.textContent = 'No progress - same page';
+                displayEl.style.color = 'var(--text-muted)';
+            } else {
+                displayEl.textContent = 'Page number decreased - check your input';
+                displayEl.style.color = 'var(--danger)';
+            }
         }
 
         function closeModal(modalId) {
@@ -1119,58 +1180,6 @@
                 console.error('Error:', error);
                 showToast('Failed to update book', 'error');
             }
-        }
-
-        async function updatePages(bookId, value) {
-            const book = books.find(b => b.id === bookId);
-            if (!book) return;
-
-            const newPage = Math.max(0, Math.min(parseInt(value) || 0, book.total_pages));
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        current_page: newPage
-                    })
-                });
-
-                if (!response.ok) throw new Error('Failed to update');
-
-                if (newPage >= book.total_pages && book.status === 'reading') {
-                    await fetch(`${API_BASE_URL}/books/${bookId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            status: 'completed',
-                            date_finished: new Date().toISOString()
-                        })
-                    });
-                    showToast('Congratulations! Book completed', 'success');
-                } else {
-                    showToast(`Updated to page ${newPage}`, 'success');
-                }
-
-                fetchBooks();
-
-            } catch (error) {
-                showToast('Failed to update pages', 'error');
-            }
-        }
-
-        async function handleProgressClick(event, bookId, totalPages) {
-            const progressBar = event.currentTarget;
-            const rect = progressBar.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const percentage = Math.max(0, Math.min(x / rect.width, 1));
-            const newPage = Math.round(percentage * totalPages);
-
-            await updatePages(bookId, newPage);
         }
 
         async function deleteBook(bookId) {
@@ -1234,9 +1243,35 @@
             e.preventDefault();
 
             if (currentBookForSession) {
+                const book = books.find(b => b.id === currentBookForSession);
+                if (!book) return;
+
+                const newPage = parseInt(document.getElementById('newCurrentPage').value);
+                const pagesRead = newPage - book.current_page;
+
+                if (pagesRead <= 0) {
+                    showToast('New page must be greater than current page', 'error');
+                    return;
+                }
+
+                const useCurrentTime = document.getElementById('useCurrentTime').checked;
+                const now = new Date().toISOString();
+
+                // Determine start and end times
+                let startTime, endTime;
+                if (useCurrentTime) {
+                    // Use current time for both (instant session)
+                    startTime = now;
+                    endTime = now;
+                } else {
+                    // Use user-specified times
+                    startTime = new Date(document.getElementById('sessionStartTime').value).toISOString();
+                    endTime = new Date(document.getElementById('sessionEndTime').value).toISOString();
+                }
+
                 const sessionData = {
-                    start_time: new Date(document.getElementById('sessionStartTime').value).toISOString(),
-                    pages_read: parseInt(document.getElementById('pagesRead').value),
+                    start_time: startTime,
+                    pages_read: pagesRead,
                     notes: document.getElementById('sessionNotes').value || null
                 };
 
@@ -1260,22 +1295,16 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            end_time: new Date(document.getElementById('sessionEndTime').value).toISOString()
+                            end_time: endTime
                         })
                     });
 
-                    // Update book pages
-                    const book = books.find(b => b.id === currentBookForSession);
-                    if (book) {
-                        const newPage = Math.min(book.current_page + sessionData.pages_read, book.total_pages);
-                        await updatePages(currentBookForSession, newPage);
-                    }
-
-                    showToast('Reading session logged', 'success');
+                    showToast(`✓ Logged ${pagesRead} pages (${book.current_page}→${newPage})`, 'success');
                     closeModal('logReadingModal');
                     fetchBooks();
 
                 } catch (error) {
+                    console.error('Error:', error);
                     showToast('Failed to log session', 'error');
                 }
             }
@@ -1284,6 +1313,15 @@
         // Time input listeners
         document.getElementById('sessionStartTime')?.addEventListener('change', calculateDuration);
         document.getElementById('sessionEndTime')?.addEventListener('change', calculateDuration);
+
+        // New page input listener - live update of pages read calculation
+        document.getElementById('newCurrentPage')?.addEventListener('input', (e) => {
+            const book = books.find(b => b.id === currentBookForSession);
+            if (book) {
+                const newPage = parseInt(e.target.value) || 0;
+                updatePagesReadCalculation(book.current_page, newPage);
+            }
+        });
 
         // Modal background click
         window.addEventListener('click', (e) => {
