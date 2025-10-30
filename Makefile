@@ -1,4 +1,4 @@
-.PHONY: help install start stop restart backend frontend frontend-status restart-frontend logs clean test db-setup db-check kill-all git-status git-commit
+.PHONY: help install start stop restart backend frontend frontend-status restart-frontend logs clean test db-setup db-check kill-all git-status git-commit hooks-install hooks-uninstall hooks-test
 
 # Color codes for better readability
 BLUE := \033[0;34m
@@ -265,6 +265,42 @@ git-push: ## Push to remote
 	@git push
 	@echo "$(GREEN)✓ Pushed successfully$(NC)"
 
+hooks-install: ## Install git pre-commit hooks
+	@echo "$(GREEN)Installing git hooks...$(NC)"
+	@if [ -f .git/hooks/pre-commit ]; then \
+		echo "$(YELLOW)Backing up existing pre-commit hook...$(NC)"; \
+		mv .git/hooks/pre-commit .git/hooks/pre-commit.backup; \
+		echo "  Saved to: .git/hooks/pre-commit.backup"; \
+	fi
+	@cp scripts/pre-commit .git/hooks/pre-commit
+	@chmod +x .git/hooks/pre-commit
+	@echo "$(GREEN)✓ Pre-commit hook installed successfully$(NC)"
+	@echo ""
+	@echo "$(BLUE)The hook will run automatically on 'git commit'$(NC)"
+	@echo "$(BLUE)To bypass: git commit --no-verify$(NC)"
+
+hooks-uninstall: ## Uninstall git pre-commit hooks
+	@echo "$(YELLOW)Uninstalling git hooks...$(NC)"
+	@if [ -f .git/hooks/pre-commit ]; then \
+		rm .git/hooks/pre-commit; \
+		echo "$(GREEN)✓ Pre-commit hook removed$(NC)"; \
+		if [ -f .git/hooks/pre-commit.backup ]; then \
+			echo "$(BLUE)Backup exists at: .git/hooks/pre-commit.backup$(NC)"; \
+		fi \
+	else \
+		echo "$(YELLOW)No pre-commit hook installed$(NC)"; \
+	fi
+
+hooks-test: ## Test pre-commit hook without committing
+	@echo "$(BLUE)Testing pre-commit hook...$(NC)"
+	@echo ""
+	@if [ -f .git/hooks/pre-commit ]; then \
+		.git/hooks/pre-commit; \
+	else \
+		echo "$(RED)✗ Pre-commit hook not installed$(NC)"; \
+		echo "$(YELLOW)Run: make hooks-install$(NC)"; \
+	fi
+
 # ============================================================
 # Cleanup
 # ============================================================
@@ -315,6 +351,11 @@ info: ## Show project information
 	@echo "$(YELLOW)Frontend Port:$(NC)   $(FRONTEND_PORT)"
 	@echo "$(YELLOW)Git Branch:$(NC)      $$(git branch --show-current)"
 	@echo "$(YELLOW)Virtual Env:$(NC)     $(VENV)"
+	@if [ -f .git/hooks/pre-commit ]; then \
+		echo "$(YELLOW)Git Hooks:$(NC)       $(GREEN)✓ Installed$(NC)"; \
+	else \
+		echo "$(YELLOW)Git Hooks:$(NC)       $(RED)✗ Not installed$(NC) (run: make hooks-install)"; \
+	fi
 	@echo ""
 	@echo "$(BLUE)═══════════════════════════════════════════════════════════$(NC)"
 	@echo ""

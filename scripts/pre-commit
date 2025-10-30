@@ -1,0 +1,197 @@
+#!/bin/bash
+#
+# Git Pre-Commit Hook for BookTracker API
+# Performs quick code quality checks before allowing commits
+#
+# To bypass these checks, use: git commit --no-verify
+#
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Exit codes
+PASS=0
+FAIL=1
+
+# Track if any checks failed
+CHECKS_FAILED=0
+
+echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
+echo -e "${BLUE}  Pre-Commit Checks${NC}"
+echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
+echo ""
+
+# Get list of staged Python files
+STAGED_PYTHON_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.py$')
+
+# ============================================================
+# Check 1: Python Syntax Errors
+# ============================================================
+if [ -n "$STAGED_PYTHON_FILES" ]; then
+    echo -e "${YELLOW}[1/5] Checking Python syntax...${NC}"
+    SYNTAX_ERRORS=0
+
+    for file in $STAGED_PYTHON_FILES; do
+        if [ -f "$file" ]; then
+            # Check syntax with Python compiler
+            python3 -m py_compile "$file" 2>/dev/null
+            if [ $? -ne 0 ]; then
+                echo -e "  ${RED}✗ Syntax error in: $file${NC}"
+                python3 -m py_compile "$file"
+                SYNTAX_ERRORS=1
+                CHECKS_FAILED=1
+            fi
+        fi
+    done
+
+    if [ $SYNTAX_ERRORS -eq 0 ]; then
+        echo -e "  ${GREEN}✓ All Python files have valid syntax${NC}"
+    fi
+    echo ""
+else
+    echo -e "${YELLOW}[1/5] Checking Python syntax...${NC}"
+    echo -e "  ${BLUE}⊘ No Python files to check${NC}"
+    echo ""
+fi
+
+# ============================================================
+# Check 2: Trailing Whitespace
+# ============================================================
+echo -e "${YELLOW}[2/5] Checking for trailing whitespace...${NC}"
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+WHITESPACE_FILES=""
+
+for file in $STAGED_FILES; do
+    if [ -f "$file" ]; then
+        # Check for trailing whitespace
+        if grep -q '[[:space:]]$' "$file"; then
+            WHITESPACE_FILES="$WHITESPACE_FILES $file"
+        fi
+    fi
+done
+
+if [ -n "$WHITESPACE_FILES" ]; then
+    echo -e "  ${YELLOW}⚠ Files with trailing whitespace:${NC}"
+    for file in $WHITESPACE_FILES; do
+        echo -e "    - $file"
+        # Auto-fix: remove trailing whitespace
+        sed -i '' 's/[[:space:]]*$//' "$file"
+        git add "$file"
+    done
+    echo -e "  ${GREEN}✓ Automatically fixed and re-staged${NC}"
+else
+    echo -e "  ${GREEN}✓ No trailing whitespace found${NC}"
+fi
+echo ""
+
+# ============================================================
+# Check 3: Large Files
+# ============================================================
+echo -e "${YELLOW}[3/5] Checking for large files...${NC}"
+MAX_FILE_SIZE=1048576  # 1MB in bytes
+LARGE_FILES=""
+
+for file in $STAGED_FILES; do
+    if [ -f "$file" ]; then
+        file_size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+        if [ $file_size -gt $MAX_FILE_SIZE ]; then
+            size_mb=$(echo "scale=2; $file_size / 1048576" | bc)
+            LARGE_FILES="$LARGE_FILES\n    - $file (${size_mb}MB)"
+        fi
+    fi
+done
+
+if [ -n "$LARGE_FILES" ]; then
+    echo -e "  ${YELLOW}⚠ Large files detected:${NC}$LARGE_FILES"
+    echo -e "  ${YELLOW}Consider using Git LFS for files > 1MB${NC}"
+    # Don't fail, just warn
+else
+    echo -e "  ${GREEN}✓ No large files detected${NC}"
+fi
+echo ""
+
+# ============================================================
+# Check 4: Forbidden Files
+# ============================================================
+echo -e "${YELLOW}[4/5] Checking for sensitive files...${NC}"
+FORBIDDEN_PATTERNS=(
+    "\.env$"
+    "\.env\.local$"
+    "\.env\.production$"
+    "credentials\.json$"
+    "\.pem$"
+    "\.key$"
+    "id_rsa$"
+)
+
+FORBIDDEN_FILES=""
+for file in $STAGED_FILES; do
+    for pattern in "${FORBIDDEN_PATTERNS[@]}"; do
+        if echo "$file" | grep -E "$pattern" > /dev/null; then
+            FORBIDDEN_FILES="$FORBIDDEN_FILES\n    - $file"
+        fi
+    done
+done
+
+if [ -n "$FORBIDDEN_FILES" ]; then
+    echo -e "  ${RED}✗ Attempting to commit sensitive files:${NC}$FORBIDDEN_FILES"
+    echo -e "  ${RED}These files should be in .gitignore${NC}"
+    CHECKS_FAILED=1
+else
+    echo -e "  ${GREEN}✓ No sensitive files detected${NC}"
+fi
+echo ""
+
+# ============================================================
+# Check 5: Python Imports (Quick Check)
+# ============================================================
+if [ -n "$STAGED_PYTHON_FILES" ]; then
+    echo -e "${YELLOW}[5/5] Checking Python imports...${NC}"
+    IMPORT_ERRORS=0
+
+    for file in $STAGED_PYTHON_FILES; do
+        if [ -f "$file" ]; then
+            # Quick import check (doesn't execute code)
+            output=$(python3 -c "import ast; ast.parse(open('$file').read())" 2>&1)
+            if [ $? -ne 0 ]; then
+                echo -e "  ${RED}✗ Import/AST error in: $file${NC}"
+                echo "$output"
+                IMPORT_ERRORS=1
+                CHECKS_FAILED=1
+            fi
+        fi
+    done
+
+    if [ $IMPORT_ERRORS -eq 0 ]; then
+        echo -e "  ${GREEN}✓ All imports look good${NC}"
+    fi
+    echo ""
+else
+    echo -e "${YELLOW}[5/5] Checking Python imports...${NC}"
+    echo -e "  ${BLUE}⊘ No Python files to check${NC}"
+    echo ""
+fi
+
+# ============================================================
+# Summary
+# ============================================================
+echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
+
+if [ $CHECKS_FAILED -eq 1 ]; then
+    echo -e "${RED}✗ Pre-commit checks FAILED${NC}"
+    echo ""
+    echo -e "${YELLOW}Fix the issues above, then try again.${NC}"
+    echo -e "${YELLOW}To bypass these checks, use: ${NC}git commit --no-verify"
+    echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
+    echo ""
+    exit $FAIL
+else
+    echo -e "${GREEN}✓ All pre-commit checks PASSED${NC}"
+    echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
+    echo ""
+    exit $PASS
+fi
