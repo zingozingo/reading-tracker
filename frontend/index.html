@@ -12,35 +12,32 @@
         }
 
         :root {
-            --forest-primary: #2D5016;
-            --forest-secondary: #3a6324;
-            --sage-green: #87A96B;
-            --mint-accent: #98FB98;
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #242424;
-            --bg-card: #2a2a2a;
-            --text-primary: #f0f0f0;
-            --text-secondary: #b8b8b8;
-            --text-muted: #888888;
-            --border-color: #3a3a3a;
-            --danger: #dc3545;
-            --warning: #ffc107;
+            /* Minimal Monochrome Theme */
+            --primary: #64748b;           /* Blue-gray */
+            --text-primary: #ffffff;      /* Pure white */
+            --text-secondary: #94a3b8;    /* Soft gray */
+            --progress-fill: #475569;     /* Darker blue-gray */
+            --bg-primary: #1a1a1a;        /* Dark background */
+            --bg-card: #242424;           /* Subtle gray cards */
+            --border-color: #2a2a2a;      /* Simple border */
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         /* Navigation Bar */
         nav {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--forest-primary);
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
             height: 45px;
             display: flex;
             align-items: center;
@@ -57,9 +54,9 @@
         .nav-brand {
             font-size: 18px;
             font-weight: 600;
-            color: var(--forest-primary);
+            color: var(--text-primary);
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
@@ -67,7 +64,7 @@
             gap: 10px;
         }
 
-        /* Buttons */
+        /* Buttons - Minimal Outlined Style */
         .btn {
             padding: 6px 12px;
             border: 1px solid;
@@ -76,53 +73,27 @@
             cursor: pointer;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             background: transparent;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            border-color: var(--forest-primary);
-            color: var(--forest-primary);
-        }
-
-        .btn-primary:hover {
-            background: var(--forest-primary);
-            color: white;
         }
 
         .btn-success {
-            background: var(--forest-primary);
-            border-color: var(--forest-primary);
-            color: white;
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
-        .btn-success:hover {
-            background: var(--forest-secondary);
-        }
-
-        .btn-warning {
-            border-color: var(--warning);
-            color: var(--warning);
-        }
-
-        .btn-warning:hover {
-            background: var(--warning);
-            color: black;
+        .btn-primary {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .btn-danger {
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-
-        .btn-danger:hover {
-            background: var(--danger);
-            color: white;
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
         }
 
         .btn-small {
-            padding: 4px 8px;
+            padding: 4px 10px;
             font-size: 10px;
         }
 
@@ -132,14 +103,14 @@
             display: flex;
             flex-direction: column;
             padding: 12px;
-            gap: 12px;
+            gap: 10px;
         }
 
         /* Stats Section */
         .stats-container {
             display: flex;
-            gap: 10px;
-            height: 60px;
+            gap: 12px;
+            height: 70px;
             flex-shrink: 0;
         }
 
@@ -147,30 +118,31 @@
             flex: 1;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .stat-value {
-            font-size: 20px;
+            font-size: 28px;
             font-weight: 600;
-            color: var(--forest-primary);
+            color: var(--text-primary);
             line-height: 1;
         }
 
         .stat-label {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
         }
 
         .stat-sublabel {
-            font-size: 9px;
-            color: var(--text-muted);
-            margin-top: 1px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 2px;
         }
 
         /* Book Sections Container */
@@ -207,11 +179,12 @@
         }
 
         .section-count {
-            background: var(--forest-primary);
-            padding: 2px 6px;
-            font-size: 10px;
+            background: var(--primary);
+            padding: 3px 8px;
+            font-size: 11px;
             color: white;
             font-weight: 600;
+            border-radius: 4px;
         }
 
         /* Books Grid */
@@ -225,36 +198,37 @@
         .books-grid {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         /* Book Card */
         .book-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 16px;
             position: relative;
         }
 
         .book-card.completed {
-            background: #1a2f1a;
-            border-color: var(--forest-primary);
+            opacity: 0.7;
         }
 
         .book-title {
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
+            line-height: 1.4;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .book-author {
-            font-size: 10px;
+            font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            font-weight: 400;
+            margin-bottom: 10px;
         }
 
         .book-metadata {
@@ -267,64 +241,66 @@
 
         .status-badge {
             padding: 2px 6px;
-            font-size: 9px;
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 500;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             display: inline-block;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
 
         .status-reading {
-            background: var(--forest-primary);
-            color: white;
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .status-want-to-read {
-            background: var(--sage-green);
-            color: white;
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
         }
 
         .status-completed {
-            background: var(--forest-secondary);
-            color: white;
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
         }
 
         .book-pages {
-            font-size: 10px;
-            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
         }
 
         /* Progress Bar */
         .progress-container {
-            margin: 6px 0;
+            margin: 10px 0;
         }
 
         .progress-label {
-            font-size: 9px;
+            font-size: 10px;
             color: var(--text-secondary);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             display: flex;
             justify-content: space-between;
+            font-weight: 400;
         }
 
         .progress-bar {
             background: var(--bg-primary);
-            height: 4px;
+            height: 6px;
             position: relative;
-            cursor: pointer;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--forest-primary);
-            transition: width 0.3s;
+            background: var(--progress-fill);
         }
 
-        .progress-fill.completed {
-            background: var(--forest-secondary);
-        }
-
-        .progress-fill.want-to-read {
-            background: var(--sage-green);
+        .progress-fill.completed,
+        .progress-fill.want-to-read,
+        .progress-fill.reading {
+            background: var(--progress-fill);
         }
 
         /* Book Actions */
@@ -347,14 +323,15 @@
             padding: 3px 4px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            color: var(--text-primary);
+            color: var(--text-secondary);
             font-size: 10px;
             text-align: center;
+            cursor: default;
         }
 
-        .page-input:focus {
-            outline: none;
-            border-color: var(--forest-primary);
+        .page-input[readonly] {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         /* Modal */
@@ -377,10 +354,10 @@
 
         .modal-content {
             background: var(--bg-card);
-            border: 1px solid var(--forest-primary);
+            border: 1px solid var(--border-color);
             padding: 20px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             max-height: 80vh;
             overflow-y: auto;
         }
@@ -389,7 +366,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
         }
@@ -428,17 +405,17 @@
 
         .form-input, .form-select, .form-textarea {
             width: 100%;
-            padding: 6px 8px;
-            background: var(--bg-secondary);
+            padding: 8px 10px;
+            background: var(--bg-primary);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            font-size: 12px;
+            font-size: 14px;
             font-family: inherit;
         }
 
         .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
-            border-color: var(--forest-primary);
+            border-color: var(--primary);
         }
 
         .form-row {
@@ -455,14 +432,14 @@
         }
 
         .duration-display {
-            padding: 8px;
-            background: var(--bg-secondary);
+            padding: 10px;
+            background: var(--bg-primary);
             text-align: center;
-            color: var(--forest-primary);
+            color: var(--text-secondary);
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 10px;
-            border: 1px solid var(--forest-primary);
+            border: 1px solid var(--border-color);
         }
 
         /* Toast Notifications */
@@ -479,27 +456,21 @@
 
         .toast {
             background: var(--bg-card);
-            border: 1px solid;
-            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
             min-width: 200px;
             max-width: 300px;
             pointer-events: auto;
             font-size: 12px;
+            font-weight: 400;
+            color: var(--text-primary);
         }
 
-        .toast.success {
-            border-color: var(--forest-primary);
-            color: var(--forest-primary);
-        }
-
-        .toast.error {
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-
+        .toast.success,
+        .toast.error,
         .toast.info {
-            border-color: var(--sage-green);
-            color: var(--sage-green);
+            border-color: var(--border-color);
+            color: var(--text-primary);
         }
 
         /* Empty State */
@@ -525,21 +496,17 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 40px;
-            height: 40px;
-            background: var(--forest-primary);
-            color: white;
-            border: none;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
             cursor: pointer;
-            font-size: 20px;
+            font-size: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 50;
-        }
-
-        .fab:hover {
-            background: var(--forest-secondary);
         }
 
         /* Scrollbar Styling */
@@ -554,10 +521,6 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--border-color);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--forest-primary);
         }
 
         /* Rating Stars */
@@ -721,22 +684,39 @@
                 <button class="close-btn" onclick="closeModal('logReadingModal')">&times;</button>
             </div>
             <form id="logReadingForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label" for="sessionStartTime">Start Time</label>
-                        <input type="datetime-local" id="sessionStartTime" class="form-input" required>
+                <div class="form-group">
+                    <div style="padding: 12px; margin-bottom: 12px; border: 1px solid var(--border-color); text-align: center;">
+                        <div style="font-size: 11px; color: var(--text-secondary); font-weight: 400; text-transform: uppercase; letter-spacing: 0.5px;">Currently on page</div>
+                        <div id="currentPageDisplay" style="font-size: 24px; color: var(--text-primary); font-weight: 600; margin-top: 4px;">--</div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="sessionEndTime">End Time</label>
-                        <input type="datetime-local" id="sessionEndTime" class="form-input" required>
-                    </div>
-                </div>
-                <div class="duration-display" id="durationDisplay">
-                    Duration: 0 minutes
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="pagesRead">Pages Read</label>
-                    <input type="number" id="pagesRead" class="form-input" required min="0" placeholder="How many pages did you read?">
+                    <label class="form-label" for="newCurrentPage">What page are you on now?</label>
+                    <input type="number" id="newCurrentPage" class="form-input" required min="0" placeholder="Enter your current page number">
+                    <div id="pagesReadCalculated" style="font-size: 12px; color: var(--text-secondary); margin-top: 6px; text-align: center; font-weight: 400;">
+                        Pages read will be calculated automatically
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px;">
+                        <input type="checkbox" id="useCurrentTime" checked onchange="toggleTimeInputs()">
+                        Use current time (recommended)
+                    </label>
+                </div>
+                <div id="timeInputsContainer" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="sessionStartTime">Start Time</label>
+                            <input type="datetime-local" id="sessionStartTime" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sessionEndTime">End Time</label>
+                            <input type="datetime-local" id="sessionEndTime" class="form-input">
+                        </div>
+                    </div>
+                    <div class="duration-display" id="durationDisplay">
+                        Duration: 0 minutes
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="sessionNotes">Notes (Optional)</label>
@@ -895,7 +875,7 @@
                             ${formatStatus(book.status)}
                         </span>
                         <span class="book-pages">
-                            ${book.current_page}/${book.total_pages}
+                            ${book.current_page} / ${book.total_pages}
                         </span>
                     </div>
                     ${book.rating ? `
@@ -908,7 +888,7 @@
                             <span>Progress</span>
                             <span>${progress}%</span>
                         </div>
-                        <div class="progress-bar" onclick="handleProgressClick(event, ${book.id}, ${book.total_pages})">
+                        <div class="progress-bar">
                             <div class="progress-fill ${progressClass}" style="width: ${progress}%"></div>
                         </div>
                     </div>
@@ -917,7 +897,7 @@
                         <div class="page-update">
                             <input type="number" class="page-input" id="pages-${book.id}"
                                    value="${book.current_page}" min="0" max="${book.total_pages}"
-                                   onchange="updatePages(${book.id}, this.value)">
+                                   readonly title="Update page through LOG button">
                             <button class="btn btn-danger btn-small" onclick="deleteBook(${book.id})">
                                 DEL
                             </button>
@@ -1056,9 +1036,53 @@
         // Modal Functions
         function openLogReadingModal(bookId) {
             currentBookForSession = bookId;
+            const book = books.find(b => b.id === bookId);
+
+            if (book) {
+                // Show current page
+                document.getElementById('currentPageDisplay').textContent = book.current_page;
+
+                // Set new page input to suggest next logical page
+                const suggestedPage = Math.min(book.current_page + 25, book.total_pages);
+                document.getElementById('newCurrentPage').value = suggestedPage;
+                document.getElementById('newCurrentPage').max = book.total_pages;
+
+                // Update calculated pages read
+                updatePagesReadCalculation(book.current_page, suggestedPage);
+            }
+
+            // Set time fields to current time
             setCurrentDateTime();
             calculateDuration();
+
+            // Reset checkbox to use current time
+            document.getElementById('useCurrentTime').checked = true;
+            toggleTimeInputs();
+
             elements.logReadingModal.classList.add('show');
+        }
+
+        function toggleTimeInputs() {
+            const useCurrentTime = document.getElementById('useCurrentTime').checked;
+            const timeContainer = document.getElementById('timeInputsContainer');
+            timeContainer.style.display = useCurrentTime ? 'none' : 'block';
+        }
+
+        function updatePagesReadCalculation(currentPage, newPage) {
+            const pagesRead = Math.max(0, newPage - currentPage);
+            const displayEl = document.getElementById('pagesReadCalculated');
+
+            if (pagesRead > 0) {
+                displayEl.textContent = `Will log ${pagesRead} pages read (${currentPage} → ${newPage})`;
+                displayEl.style.color = '#ffffff';
+                displayEl.style.fontWeight = '500';
+            } else if (pagesRead === 0) {
+                displayEl.textContent = 'No progress - same page';
+                displayEl.style.color = '#94a3b8';
+            } else {
+                displayEl.textContent = 'Page number decreased - check your input';
+                displayEl.style.color = '#94a3b8';
+            }
         }
 
         function closeModal(modalId) {
@@ -1119,58 +1143,6 @@
                 console.error('Error:', error);
                 showToast('Failed to update book', 'error');
             }
-        }
-
-        async function updatePages(bookId, value) {
-            const book = books.find(b => b.id === bookId);
-            if (!book) return;
-
-            const newPage = Math.max(0, Math.min(parseInt(value) || 0, book.total_pages));
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/books/${bookId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        current_page: newPage
-                    })
-                });
-
-                if (!response.ok) throw new Error('Failed to update');
-
-                if (newPage >= book.total_pages && book.status === 'reading') {
-                    await fetch(`${API_BASE_URL}/books/${bookId}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            status: 'completed',
-                            date_finished: new Date().toISOString()
-                        })
-                    });
-                    showToast('Congratulations! Book completed', 'success');
-                } else {
-                    showToast(`Updated to page ${newPage}`, 'success');
-                }
-
-                fetchBooks();
-
-            } catch (error) {
-                showToast('Failed to update pages', 'error');
-            }
-        }
-
-        async function handleProgressClick(event, bookId, totalPages) {
-            const progressBar = event.currentTarget;
-            const rect = progressBar.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const percentage = Math.max(0, Math.min(x / rect.width, 1));
-            const newPage = Math.round(percentage * totalPages);
-
-            await updatePages(bookId, newPage);
         }
 
         async function deleteBook(bookId) {
@@ -1234,9 +1206,35 @@
             e.preventDefault();
 
             if (currentBookForSession) {
+                const book = books.find(b => b.id === currentBookForSession);
+                if (!book) return;
+
+                const newPage = parseInt(document.getElementById('newCurrentPage').value);
+                const pagesRead = newPage - book.current_page;
+
+                if (pagesRead <= 0) {
+                    showToast('New page must be greater than current page', 'error');
+                    return;
+                }
+
+                const useCurrentTime = document.getElementById('useCurrentTime').checked;
+                const now = new Date().toISOString();
+
+                // Determine start and end times
+                let startTime, endTime;
+                if (useCurrentTime) {
+                    // Use current time for both (instant session)
+                    startTime = now;
+                    endTime = now;
+                } else {
+                    // Use user-specified times
+                    startTime = new Date(document.getElementById('sessionStartTime').value).toISOString();
+                    endTime = new Date(document.getElementById('sessionEndTime').value).toISOString();
+                }
+
                 const sessionData = {
-                    start_time: new Date(document.getElementById('sessionStartTime').value).toISOString(),
-                    pages_read: parseInt(document.getElementById('pagesRead').value),
+                    start_time: startTime,
+                    pages_read: pagesRead,
                     notes: document.getElementById('sessionNotes').value || null
                 };
 
@@ -1260,22 +1258,16 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            end_time: new Date(document.getElementById('sessionEndTime').value).toISOString()
+                            end_time: endTime
                         })
                     });
 
-                    // Update book pages
-                    const book = books.find(b => b.id === currentBookForSession);
-                    if (book) {
-                        const newPage = Math.min(book.current_page + sessionData.pages_read, book.total_pages);
-                        await updatePages(currentBookForSession, newPage);
-                    }
-
-                    showToast('Reading session logged', 'success');
+                    showToast(`✓ Logged ${pagesRead} pages (${book.current_page}→${newPage})`, 'success');
                     closeModal('logReadingModal');
                     fetchBooks();
 
                 } catch (error) {
+                    console.error('Error:', error);
                     showToast('Failed to log session', 'error');
                 }
             }
@@ -1284,6 +1276,15 @@
         // Time input listeners
         document.getElementById('sessionStartTime')?.addEventListener('change', calculateDuration);
         document.getElementById('sessionEndTime')?.addEventListener('change', calculateDuration);
+
+        // New page input listener - live update of pages read calculation
+        document.getElementById('newCurrentPage')?.addEventListener('input', (e) => {
+            const book = books.find(b => b.id === currentBookForSession);
+            if (book) {
+                const newPage = parseInt(e.target.value) || 0;
+                updatePagesReadCalculation(book.current_page, newPage);
+            }
+        });
 
         // Modal background click
         window.addEventListener('click', (e) => {
